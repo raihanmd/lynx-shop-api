@@ -7,14 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import supabase from "../../config/supabase.js";
-import { ResponseError } from "../../error/responseError.js";
-import { validate } from "../../utils/validation.js";
-import { registerUserValidation } from "../../validation/userValidation.js";
-export const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = validate(registerUserValidation, req);
-    const { data } = yield supabase.from("user").select("id");
-    if (Number(data) === 0) {
-        throw new ResponseError(400, "Username already exists");
-    }
+export const apiKeyMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req);
 });
