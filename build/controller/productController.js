@@ -7,6 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const APICheckMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req);
+import productService from "../services/productService.js";
+import { customResponse } from "../utils/customResponse.js";
+const getAll = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield productService.getAll();
+        return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: products }, res);
+    }
+    catch (err) {
+        next(err);
+    }
 });
+export default { getAll };

@@ -7,6 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const APICheckMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req);
+import userDatabase from "../../database/user/userDatabase.js";
+import { ServiceError } from "../../error/serviceError.js";
+import { validate } from "../../utils/validation.js";
+import { loginUserValidation } from "../../validation/userValidation.js";
+export const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const loginRequest = validate(loginUserValidation, req);
+    const { userName } = yield userDatabase.login(loginRequest);
+    if (userName === undefined) {
+        throw new ServiceError(401, "Unauthorized");
+    }
+    return userName;
 });

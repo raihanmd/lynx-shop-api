@@ -1,35 +1,33 @@
-import bcrypt from "bcrypt";
-
-import { PREFIX } from "../const/prefix.js";
-import { validate } from "../utils/validation.js";
-import { getNanoid } from "../utils/getNanoid.js";
-import { ServiceError } from "../error/serviceError.js";
-import { loginUserValidation, registerUserValidation } from "../validation/userValidation.js";
-import { IRegisterLoginUserBody } from "../interfaces/user/IRegisterLoginUserBody.js";
+import PREFIX from "../const/prefix.js";
 import userDatabase from "../database/user/userDatabase.js";
+import { IRegisterUserBody } from "../interfaces/user/IRegisterLoginUserBody.js";
+import { getNanoid } from "../utils/getNanoid.js";
+import { validate } from "../utils/validation.js";
+import { ServiceError } from "../error/serviceError.js";
+import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
+import { loginUserValidation } from "../validation/userValidation.js";
+import { registerUserValidation } from "../validation/userValidation.js";
 
-const register = async (req: IRegisterLoginUserBody) => {
+export const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);
-
-  // if (isExist?.length === 1) throw new ServiceError(400, "Username already exists");
 
   user.userId = PREFIX.USER + getNanoid();
 
-  await userDatabase.registerUser(user);
+  const { userName } = await userDatabase.register(user);
 
-  // if (newUserError) throw new Error();
-
-  // return newUser[0];
+  return userName;
 };
 
-const login = async (req: IRegisterLoginUserBody) => {
+export const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
   const loginRequest = validate(loginUserValidation, req);
 
-  // if (!user || user.length === 0) throw new ServiceError(401, "Username or password wrong");
+  const { userName } = await userDatabase.login(loginRequest);
 
-  // if (!isPasswordValid) throw new ServiceError(401, "Username or password wrong");
+  if (userName === undefined) {
+    throw new ServiceError(401, "Unauthorized");
+  }
 
-  // return user[0];
+  return userName;
 };
 
 export default { register, login };

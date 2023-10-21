@@ -7,6 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const APICheckMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req);
-});
+import { con } from "../../config/database.js";
+export function login({ userOAuthId, userEmail, userProvider }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield con
+            .query(`SELECT user_name AS userName FROM user WHERE oauth_id = '${userOAuthId}' AND email = '${userEmail}' AND provider = '${userProvider}'`)
+            .then(([rows]) => rows[0])
+            .catch((err) => {
+            throw err;
+        });
+    });
+}

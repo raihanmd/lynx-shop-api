@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { con } from "../../config/database.js";
-import { ServiceError } from "../../error/serviceError.js";
+import { DatabaseError } from "../../error/databaseError.js";
 export function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
@@ -21,7 +21,7 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new ServiceError(500, "Failed to insert data.");
+                            throw new DatabaseError("Failed to insert data.");
                         }
                     }
                 });
@@ -30,10 +30,11 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new ServiceError(500, "Failed to insert data.");
+                            throw new DatabaseError("Failed to insert data.");
                         }
                     }
                 });
+                yield connection.query(`SELECT user_name AS userName FROM user WHERE id = ${userId}`).then(([rows]) => { var _a; return (_a = rows[0]) === null || _a === void 0 ? void 0 : _a.userName; });
                 yield connection.commit();
             }
             catch (err) {

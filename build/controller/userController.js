@@ -11,8 +11,8 @@ import userService from "../services/userService.js";
 import { customResponse } from "../utils/customResponse.js";
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username } = yield userService.register(req.body);
-        return customResponse({ statusCode: 200, message: "User created", payload: { username } }, res);
+        const { userName } = yield userService.register(req.body);
+        return customResponse({ statusCode: 200, message: "User created", payload: { userName } }, res);
     }
     catch (err) {
         next(err);
@@ -20,8 +20,8 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username } = yield userService.login(req.body);
-        return customResponse({ statusCode: 200, message: "Login success", payload: { username } }, res);
+        const { userName } = yield userService.login(req.body);
+        return customResponse({ statusCode: 200, message: "Login success", payload: { userName } }, res);
     }
     catch (err) {
         next(err);

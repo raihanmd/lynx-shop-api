@@ -7,6 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const APICheckMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req);
+import PREFIX from "../../const/prefix.js";
+import userDatabase from "../../database/user/userDatabase.js";
+import { getNanoid } from "../../utils/getNanoid.js";
+import { validate } from "../../utils/validation.js";
+import { registerUserValidation } from "../../validation/userValidation.js";
+export const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = validate(registerUserValidation, req);
+    user.userId = PREFIX.USER + getNanoid();
+    const { userName } = yield userDatabase.register(user);
+    return userName;
 });

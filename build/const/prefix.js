@@ -1,3 +1,4 @@
-export const PREFIX = {
+const PREFIX = {
     USER: "usr_",
 };
+export default PREFIX;

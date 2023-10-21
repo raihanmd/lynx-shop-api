@@ -5,9 +5,9 @@ import { customResponse } from "../utils/customResponse.js";
 
 const register: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { username } = await userService.register(req.body);
+    const { userName } = await userService.register(req.body);
 
-    return customResponse({ statusCode: 200, message: "User created", payload: { username } }, res);
+    return customResponse({ statusCode: 200, message: "User created", payload: { userName } }, res);
   } catch (err) {
     next(err);
   }
@@ -15,9 +15,9 @@ const register: Handler = async (req: Request, res: Response, next: NextFunction
 
 const login: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { username } = await userService.login(req.body);
+    const { userName } = await userService.login(req.body);
 
-    return customResponse({ statusCode: 200, message: "Login success", payload: { username } }, res);
+    return customResponse({ statusCode: 200, message: "Login success", payload: { userName } }, res);
   } catch (err) {
     next(err);
   }

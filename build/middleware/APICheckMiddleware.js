@@ -7,24 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Joi from "joi";
-import { ServiceError } from "../error/serviceError.js";
 import { errorResponse } from "../utils/errorResponse.js";
-import { DatabaseError } from "../error/databaseError.js";
-export const errorMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!err) {
-        return next();
-    }
-    if (err instanceof ServiceError) {
-        return errorResponse({ statusCode: err.statusCode, error: err.message }, res);
-    }
-    else if (err instanceof DatabaseError) {
-        return errorResponse({ statusCode: 403, error: err.message }, res);
-    }
-    else if (err instanceof Joi.ValidationError) {
-        return errorResponse({ statusCode: 400, error: err.message }, res);
+export const APICheckMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.method === "POST" && req.get("API-Key") !== process.env.API_KEY) {
+        return errorResponse({ statusCode: 400, error: "Guest can't do the POST request." }, res);
     }
     else {
-        return errorResponse({ statusCode: 500, error: "Internal Server Error" }, res);
+        next();
     }
 });

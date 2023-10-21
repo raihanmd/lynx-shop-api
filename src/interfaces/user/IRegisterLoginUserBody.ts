@@ -1,4 +1,4 @@
-export interface IRegisterLoginUserBody {
+export interface IRegisterUserBody {
   userId?: string;
   userOAuthId: string;
   userEmail: string;

@@ -1,8 +1,8 @@
 import { con } from "../../config/database.js";
-import { ServiceError } from "../../error/serviceError.js";
-import { IRegisterLoginUserBody } from "../../interfaces/user/IRegisterLoginUserBody.js";
+import { DatabaseError } from "../../error/databaseError.js";
+import { IRegisterUserBody } from "../../interfaces/user/IRegisterLoginUserBody.js";
 
-export async function registerUser({ userId, userName, userEmail, userOAuthId, userProvider, userImage }: IRegisterLoginUserBody) {
+export async function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }: IRegisterUserBody): Promise<{ userName: string } | any> {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -13,7 +13,7 @@ export async function registerUser({ userId, userName, userEmail, userOAuthId, u
           if (fields.affectedRows <= 0) {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new ServiceError(500, "Failed to insert data.");
+              throw new DatabaseError("Failed to insert data.");
             }
           }
         });
@@ -22,10 +22,11 @@ export async function registerUser({ userId, userName, userEmail, userOAuthId, u
           if (fields.affectedRows <= 0) {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new ServiceError(500, "Failed to insert data.");
+              throw new DatabaseError("Failed to insert data.");
             }
           }
         });
+        await connection.query(`SELECT user_name AS userName FROM user WHERE id = ${userId}`).then(([rows]: Array<any>) => rows[0]?.userName);
         await connection.commit();
       } catch (err) {
         await connection.rollback();

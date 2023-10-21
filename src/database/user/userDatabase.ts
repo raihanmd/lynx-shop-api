@@ -1,3 +1,4 @@
-import { registerUser } from "./registerUser.js";
+import { register } from "./register.js";
+import { login } from "./login.js";
 
-export default { registerUser };
+export default { register, login };
