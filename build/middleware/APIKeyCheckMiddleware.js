@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import "dotenv/config";
 import { errorResponse } from "../utils/errorResponse.js";
 export const APIKeyCheckMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.method === "POST" && req.get("API-Key") !== process.env.API_KEY) {

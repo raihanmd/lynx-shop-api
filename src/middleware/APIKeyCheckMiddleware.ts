@@ -1,4 +1,6 @@
+import "dotenv/config";
 import { Response, NextFunction, Request } from "express";
+
 import { errorResponse } from "../utils/errorResponse.js";
 
 export const APIKeyCheckMiddleware = async (req: Request, res: Response, next: NextFunction) => {
