@@ -13,4 +13,14 @@ const getAll: Handler = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-export default { getAll };
+const insertOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const isSucceed = await productService.insertOne(req.body);
+
+    return customResponse({ statusCode: 200, message: "Product added successfully.", payload: isSucceed }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { getAll, insertOne };

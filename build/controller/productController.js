@@ -18,4 +18,13 @@ const getAll = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         next(err);
     }
 });
-export default { getAll };
+const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const isSucceed = yield productService.insertOne(req.body);
+        return customResponse({ statusCode: 200, message: "Product added successfully.", payload: isSucceed }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+export default { getAll, insertOne };

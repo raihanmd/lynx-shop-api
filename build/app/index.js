@@ -7,6 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(APIKeyCheckMiddleware);
 app.use(cacheControl(300));
-app.use(mainRouter);
+app.use("/v1", mainRouter);
 app.use(errorMiddleware);
 export { app };

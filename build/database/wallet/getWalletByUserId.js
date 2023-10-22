@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { con } from "../../config/database.js";
-export function getWalletByUserId(userId) {
+export function getByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
             .query(`SELECT balance FROM wallet WHERE id_user = '${userId}'`)

@@ -2,11 +2,14 @@ import { Router } from "express";
 import userController from "../controller/userController.js";
 import productController from "../controller/productController.js";
 
-const mainRouter = Router();
-mainRouter.post("/api/register", userController.register);
-mainRouter.post("/api/login", userController.login);
+//? endpoint /v1/....
 
-mainRouter.get("/api/product", productController.getAll);
-mainRouter.post("/api/product", productController.getAll);
+const mainRouter = Router();
+
+mainRouter.post("/register", userController.register);
+mainRouter.post("/login", userController.login);
+
+mainRouter.get("/product", productController.getAll);
+mainRouter.post("/product", productController.insertOne);
 
 export { mainRouter };
