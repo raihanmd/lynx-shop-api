@@ -6,7 +6,7 @@ const mainRouter = Router();
 mainRouter.post("/api/register", userController.register);
 mainRouter.post("/api/login", userController.login);
 
-mainRouter.get("/api/products", productController.getAll);
-mainRouter.post("/api/products", productController.getAll);
+mainRouter.get("/api/product", productController.getAll);
+mainRouter.post("/api/product", productController.getAll);
 
 export { mainRouter };
