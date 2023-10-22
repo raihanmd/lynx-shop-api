@@ -14,13 +14,13 @@ import { validate } from "../utils/validation.js";
 import { ServiceError } from "../error/serviceError.js";
 import { loginUserValidation } from "../validation/userValidation.js";
 import { registerUserValidation } from "../validation/userValidation.js";
-export const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
+const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const user = validate(registerUserValidation, req);
     user.userId = PREFIX.USER + getNanoid();
     const { userName } = yield userDatabase.register(user);
     return userName;
 });
-export const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const loginRequest = validate(loginUserValidation, req);
     const { userName } = yield userDatabase.login(loginRequest);
     if (userName === undefined) {

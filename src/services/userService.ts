@@ -8,7 +8,7 @@ import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
 import { loginUserValidation } from "../validation/userValidation.js";
 import { registerUserValidation } from "../validation/userValidation.js";
 
-export const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
+const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);
 
   user.userId = PREFIX.USER + getNanoid();
@@ -18,7 +18,7 @@ export const register = async (req: IRegisterUserBody): Promise<{ userName: stri
   return userName;
 };
 
-export const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
+const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
   const loginRequest = validate(loginUserValidation, req);
 
   const { userName } = await userDatabase.login(loginRequest);

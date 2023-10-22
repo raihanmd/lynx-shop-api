@@ -8,8 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import productDatabase from "../database/product/productDatabase.js";
-export const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
+import { validate } from "../utils/validation.js";
+import { registerUserValidation } from "../validation/userValidation.js";
+import { getWalletByUserId } from "../database/wallet/getWalletByUserId.js";
+import { ServiceError } from "../error/serviceError.js";
+import PREFIX from "../const/prefix.js";
+const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield productDatabase.getAll();
     return products;
+});
+const postOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const productBody = validate(registerUserValidation, req);
+    const userWallet = yield getWalletByUserId(productBody.userId);
+    if (!userWallet) {
+        throw new ServiceError(403, "You must have the wallet first.");
+    }
+    productBody.productId = PREFIX.PRODUCT;
+    return [{}];
 });
 export default { getAll };
