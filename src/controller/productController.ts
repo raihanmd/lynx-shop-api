@@ -43,4 +43,4 @@ const deleteOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export default { getAll, insertOne, update };
+export default { getAll, insertOne, update, deleteOne };

@@ -45,4 +45,4 @@ const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(err);
     }
 });
-export default { getAll, insertOne, update };
+export default { getAll, insertOne, update, deleteOne };
