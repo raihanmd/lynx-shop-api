@@ -13,7 +13,7 @@ export async function register({ userId, userName, userEmail, userOAuthId, userP
           if (fields.affectedRows <= 0) {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new DatabaseError("Failed to insert data.");
+              throw new DatabaseError("Failed to insert user.");
             }
           }
         });
@@ -22,7 +22,7 @@ export async function register({ userId, userName, userEmail, userOAuthId, userP
           if (fields.affectedRows <= 0) {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new DatabaseError("Failed to insert data.");
+              throw new DatabaseError("Failed to insert user.");
             }
           }
         });

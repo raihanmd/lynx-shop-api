@@ -7,10 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import slugify from "slugify";
 import { con } from "../../config/database.js";
 import { DatabaseError } from "../../error/databaseError.js";
 import { ServiceError } from "../../error/serviceError.js";
-export function insertOne({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug, userId, createdAt, productImage, blurhash }) {
+export function update({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight }) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
             .getConnection()
@@ -22,15 +23,22 @@ export function insertOne({ productId, productName, productPrice, productCategor
                 if (idCategory.length <= 0) {
                     throw new ServiceError(404, "Product not found.");
                 }
+                //@ts-ignore
+                const productSlug = slugify(productName);
                 yield connection
-                    .query(`INSERT INTO products 
-                (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at)
-                  VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
-                    '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${productWeight}, ${createdAt})`)
+                    .query(`UPDATE products 
+                SET id_categories = '${idCategory[0].id}', 
+                    name = '${productName}', 
+                    slug = '${productSlug}',
+                    description = '${productDescription}', 
+                    price = ${productPrice},
+                    quantity = ${productQuantity},
+                    weight = ${productWeight},
+                    WHERE id = '${productId}' AND id_user = '${userId}'`)
                     .then(([fields]) => {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {
-                        throw new DatabaseError("Failed to insert product.");
+                        throw new DatabaseError("Failed to update product.");
                     }
                 });
                 yield connection.commit();

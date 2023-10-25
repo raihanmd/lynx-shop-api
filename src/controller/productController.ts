@@ -23,4 +23,24 @@ const insertOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export default { getAll, insertOne };
+const update: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const isSucceed = await productService.update(req.body);
+
+    return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const isSucceed = await productService.deleteOne(req.body);
+
+    return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { getAll, insertOne, update };

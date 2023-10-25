@@ -11,5 +11,6 @@ mainRouter.post("/login", userController.login);
 
 mainRouter.get("/product", productController.getAll);
 mainRouter.post("/product", productController.insertOne);
+mainRouter.put("/product", productController.update);
 
 export { mainRouter };

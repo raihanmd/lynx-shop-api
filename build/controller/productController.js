@@ -27,4 +27,22 @@ const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(err);
     }
 });
-export default { getAll, insertOne };
+const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const isSucceed = yield productService.update(req.body);
+        return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const isSucceed = yield productService.deleteOne(req.body);
+        return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+export default { getAll, insertOne, update };

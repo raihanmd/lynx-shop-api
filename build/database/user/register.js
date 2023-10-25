@@ -21,7 +21,7 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new DatabaseError("Failed to insert data.");
+                            throw new DatabaseError("Failed to insert user.");
                         }
                     }
                 });
@@ -30,7 +30,7 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new DatabaseError("Failed to insert data.");
+                            throw new DatabaseError("Failed to insert user.");
                         }
                     }
                 });

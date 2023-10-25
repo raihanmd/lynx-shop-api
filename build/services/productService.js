@@ -14,13 +14,13 @@ import productDatabase from "../database/product/productDatabase.js";
 import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
 import { ServiceError } from "../error/serviceError.js";
-import { postProductValidation } from "../validation/productValidation.js";
+import { addProductValidation, deleteProductValidation, updateProductValidation } from "../validation/productValidation.js";
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield productDatabase.getAll();
     return products;
 });
 const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(postProductValidation, req);
+    const productBody = validate(addProductValidation, req);
     const userWallet = yield walletDatabase.getByUserId(productBody.userId);
     if (!userWallet) {
         throw new ServiceError(403, "You must have the wallet first.");
@@ -32,4 +32,14 @@ const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     yield productDatabase.insertOne(productBody);
     return { isSucceed: true };
 });
-export default { getAll, insertOne };
+const update = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const productBody = validate(updateProductValidation, req);
+    yield productDatabase.update(productBody);
+    return { isSucceed: true };
+});
+const deleteOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const productBody = validate(deleteProductValidation, req);
+    yield productDatabase.deleteOne(productBody);
+    return { isSucceed: true };
+});
+export default { getAll, insertOne, update, deleteOne };

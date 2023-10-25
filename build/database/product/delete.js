@@ -8,29 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { ServiceError } from "../../error/serviceError.js";
-export function insertOne({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug, userId, createdAt, productImage, blurhash }) {
+export function deleteOne({ productId, userId }) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
             .getConnection()
             .then((connection) => __awaiter(this, void 0, void 0, function* () {
             connection.beginTransaction();
             try {
-                //@ts-ignore
-                const [idCategory = rows] = yield connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
-                if (idCategory.length <= 0) {
-                    throw new ServiceError(404, "Product not found.");
-                }
                 yield connection
-                    .query(`INSERT INTO products 
-                (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at)
-                  VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
-                    '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${productWeight}, ${createdAt})`)
+                    .query(`DELETE FROM products 
+                WHERE id = '${productId}' AND id_user = '${userId}'`)
                     .then(([fields]) => {
-                    //@ts-ignore
                     if (fields.affectedRows <= 0) {
-                        throw new DatabaseError("Failed to insert product.");
+                        const err = new Error(`Internal server error.`);
+                        err.statusCode = 500;
+                        err.payload = "Failed to delete data.";
+                        throw err;
                     }
                 });
                 yield connection.commit();
