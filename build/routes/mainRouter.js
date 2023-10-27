@@ -9,4 +9,5 @@ mainRouter.get("/product", productController.getAll);
 mainRouter.post("/product", productController.insertOne);
 mainRouter.put("/product", productController.update);
 mainRouter.delete("/product", productController.deleteOne);
+mainRouter.get("/:userName", userController.getUserPage);
 export { mainRouter };

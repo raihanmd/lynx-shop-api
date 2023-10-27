@@ -1,6 +1,6 @@
 import { con } from "../../config/database.js";
 import { DatabaseError } from "../../error/databaseError.js";
-import { IDeleteProductBody } from "../../interfaces/product/IPostProductBody.js";
+import { IDeleteProductBody } from "../../interfaces/product/IProductBody.js";
 
 export async function deleteOne({ productId, userId }: IDeleteProductBody) {
   return await con

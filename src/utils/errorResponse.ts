@@ -6,11 +6,8 @@ interface IResponse {
 }
 
 export const errorResponse = ({ statusCode, error }: IResponse, res: Response): Response => {
-  return res
-    .status(statusCode)
-    .json({
-      statusCode,
-      error,
-    })
-    .end();
+  return res.status(statusCode).json({
+    statusCode,
+    error,
+  });
 };

@@ -27,4 +27,13 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         next(err);
     }
 });
-export default { register, login };
+const getUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield userService.getUserPage(req.params);
+        return customResponse({ statusCode: 200, message: "Login success", payload: response }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+export default { register, login, getUserPage };

@@ -5,7 +5,7 @@ import getUnixTime from "../utils/getUnixTime.js";
 import productDatabase from "../database/product/productDatabase.js";
 import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
-import { IAddProductBody, IDeleteProductBody, IUpdateProductBody } from "../interfaces/product/IPostProductBody.js";
+import { IAddProductBody, IDeleteProductBody, IUpdateProductBody } from "../interfaces/product/IProductBody.js";
 import { ServiceError } from "../error/serviceError.js";
 import { addProductValidation, deleteProductValidation, updateProductValidation } from "../validation/productValidation.js";
 

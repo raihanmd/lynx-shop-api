@@ -28,4 +28,41 @@ const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return userName;
 });
-export default { register, login };
+const getUserPage = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userName } = req;
+    const userProduct = yield userDatabase.getProducts(userName);
+    const userPage = yield userDatabase.getPage(userName);
+    // @ts-ignore
+    if (userPage.length === 0) {
+        throw new ServiceError(404, "User not found.");
+    }
+    // @ts-ignore
+    const { userImage, userBanner, userBio, userShopDescription, totalRating } = userPage[0];
+    // @ts-ignore
+    if (userProduct.length === 0) {
+        const response = {
+            userImage,
+            userName,
+        };
+        return response;
+    }
+    const { userProvince, userCity } = yield userDatabase.getAddress(userName);
+    //@ts-ignore
+    if (!userProduct[0].productId) {
+        //@ts-ignore
+        return userProduct[0].userName;
+    }
+    const response = {
+        userName,
+        userImage,
+        userBanner,
+        userBio,
+        userShopDescription,
+        userProvince,
+        userCity,
+        totalRating,
+        userProduct,
+    };
+    return response;
+});
+export default { register, login, getUserPage };

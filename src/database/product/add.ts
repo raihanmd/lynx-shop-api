@@ -1,7 +1,7 @@
 import { con } from "../../config/database.js";
 import { DatabaseError } from "../../error/databaseError.js";
 import { ServiceError } from "../../error/serviceError.js";
-import { IAddProductBody } from "../../interfaces/product/IPostProductBody.js";
+import { IAddProductBody } from "../../interfaces/product/IProductBody.js";
 
 export async function insertOne({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug, userId, createdAt, productImage, blurhash }: IAddProductBody) {
   return await con

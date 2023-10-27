@@ -23,4 +23,14 @@ const login: Handler = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export default { register, login };
+const getUserPage: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const response = await userService.getUserPage(req.params);
+
+    return customResponse({ statusCode: 200, message: "Login success", payload: response }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { register, login, getUserPage };

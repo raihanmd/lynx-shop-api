@@ -7,6 +7,7 @@ import { ServiceError } from "../error/serviceError.js";
 import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
 import { loginUserValidation } from "../validation/userValidation.js";
 import { registerUserValidation } from "../validation/userValidation.js";
+import { IResponseGetProduct, IResponseUserUnverified } from "../interfaces/product/IProductResponse.js";
 
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);
@@ -30,4 +31,52 @@ const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
   return userName;
 };
 
-export default { register, login };
+const getUserPage = async (req: { userName: string } | any): Promise<IResponseGetProduct | IResponseUserUnverified> => {
+  const { userName } = req;
+
+  const userProduct = await userDatabase.getProducts(userName);
+
+  const userPage = await userDatabase.getPage(userName);
+
+  // @ts-ignore
+  if (userPage.length === 0) {
+    throw new ServiceError(404, "User not found.");
+  }
+
+  // @ts-ignore
+  const { userImage, userBanner, userBio, userShopDescription, totalRating } = userPage[0];
+
+  // @ts-ignore
+  if (userProduct.length === 0) {
+    const response = {
+      userImage,
+      userName,
+    };
+
+    return response;
+  }
+
+  const { userProvince, userCity } = await userDatabase.getAddress(userName);
+
+  //@ts-ignore
+  if (!userProduct[0].productId) {
+    //@ts-ignore
+    return userProduct[0].userName;
+  }
+
+  const response: IResponseGetProduct | any = {
+    userName,
+    userImage,
+    userBanner,
+    userBio,
+    userShopDescription,
+    userProvince,
+    userCity,
+    totalRating,
+    userProduct,
+  };
+
+  return response;
+};
+
+export default { register, login, getUserPage };
