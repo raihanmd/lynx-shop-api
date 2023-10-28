@@ -39,7 +39,7 @@ const insertOne = async (req: IPOSTProductBody): Promise<object> => {
 const update = async (req: IPUTProductBody): Promise<object> => {
   const productBody = validate(updateProductValidation, req);
 
-  await productDatabase.update(productBody);
+  await productDatabase.updateOne(productBody);
 
   return { isSucceed: true };
 };
