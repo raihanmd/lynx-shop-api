@@ -14,3 +14,25 @@ export interface IResponseUserUnverified {
   userImage: string;
   userName: string;
 }
+
+export interface IResponseProductServicesGetDetail {
+  productId: string;
+  productName: string;
+  productPrice: number;
+  productImage: string;
+  productBlurhash: string;
+  productDescription: string;
+  productQuantity: number;
+  productWeight: number;
+  productRating: number | null;
+  totalReviews: number;
+  totalOrders: number;
+  ownedBy: string;
+  ownerImage: string;
+  ownerShopDescription: string;
+  ownerProvince: string;
+  ownerProvinceId: number;
+  ownerCity: string;
+  ownerCityId: number;
+  ownerTotalRating: number;
+}

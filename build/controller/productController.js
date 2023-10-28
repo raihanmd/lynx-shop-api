@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import productService from "../services/productService.js";
 import { customResponse } from "../utils/customResponse.js";
+import productService from "../services/productService.js";
 const getAll = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield productService.getAll();
@@ -39,10 +39,19 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isSucceed = yield productService.deleteOne(req.body);
-        return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+        return customResponse({ statusCode: 200, message: "Product deleted successfully.", payload: isSucceed }, res);
     }
     catch (err) {
         next(err);
     }
 });
-export default { getAll, insertOne, update, deleteOne };
+const getProductDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const detailProduct = yield productService.getDetail(req.params);
+        return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: detailProduct }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+export default { getAll, insertOne, update, deleteOne, getProductDetail };

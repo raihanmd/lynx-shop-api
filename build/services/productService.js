@@ -15,6 +15,7 @@ import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
 import { ServiceError } from "../error/serviceError.js";
 import { addProductValidation, deleteProductValidation, updateProductValidation } from "../validation/productValidation.js";
+import userDatabase from "../database/user/userDatabase.js";
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield productDatabase.getAll();
     return products;
@@ -42,4 +43,22 @@ const deleteOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     yield productDatabase.deleteOne(productBody);
     return { isSucceed: true };
 });
-export default { getAll, insertOne, update, deleteOne };
+const getDetail = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userName, slugProduct } = req;
+    // @ts-ignore
+    const userPage = yield userDatabase.getPage(userName);
+    // @ts-ignore
+    if (userPage.length === 0) {
+        throw new ServiceError(404, "User not found.");
+    }
+    const product = yield productDatabase.getDetail(userName, slugProduct);
+    if (!product) {
+        throw new ServiceError(404, "Product not found.");
+    }
+    // @ts-ignore
+    const { userImage: ownerImage, userShopDescription: ownerShopDescription, totalRating: ownerTotalRating } = userPage[0];
+    const { userProvince: ownerProvince, userCity: ownerCity, userProvinceId: ownerProvinceId, userCityId: ownerCityId } = yield userDatabase.getAddress(userName);
+    const detailProduct = Object.assign(Object.assign({}, product), { ownerImage, ownerShopDescription, ownerProvince, ownerProvinceId, ownerCity, ownerCityId, ownerTotalRating });
+    return detailProduct;
+});
+export default { getAll, insertOne, update, deleteOne, getDetail };

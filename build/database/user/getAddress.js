@@ -12,7 +12,9 @@ export function getAddress(userName) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
             .query(`SELECT a.province AS userProvince,
-              a.city AS userCity
+              a.city AS userCity,
+              a.province_id AS userProvinceId,
+              a.city_id AS userCityId
         FROM user AS u
           LEFT JOIN addresses AS a ON u.id = a.id_user
             WHERE user_name = '${userName}'`)

@@ -16,4 +16,6 @@ mainRouter.delete("/product", productController.deleteOne);
 
 mainRouter.get("/:userName", userController.getUserPage);
 
+mainRouter.get("/:userName/:slugProduct", productController.getProductDetail);
+
 export { mainRouter };

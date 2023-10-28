@@ -10,4 +10,5 @@ mainRouter.post("/product", productController.insertOne);
 mainRouter.put("/product", productController.update);
 mainRouter.delete("/product", productController.deleteOne);
 mainRouter.get("/:userName", userController.getUserPage);
+mainRouter.get("/:userName/:slugProduct", productController.getProductDetail);
 export { mainRouter };

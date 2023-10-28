@@ -8,6 +8,8 @@ import { validate } from "../utils/validation.js";
 import { IAddProductBody, IDeleteProductBody, IUpdateProductBody } from "../interfaces/product/IProductBody.js";
 import { ServiceError } from "../error/serviceError.js";
 import { addProductValidation, deleteProductValidation, updateProductValidation } from "../validation/productValidation.js";
+import userDatabase from "../database/user/userDatabase.js";
+import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse.js";
 
 const getAll = async (): Promise<Array<object>> => {
   const products = await productDatabase.getAll();
@@ -50,4 +52,31 @@ const deleteOne = async (req: IDeleteProductBody): Promise<object> => {
   return { isSucceed: true };
 };
 
-export default { getAll, insertOne, update, deleteOne };
+const getDetail = async (req: { userName: string } | any): Promise<IResponseProductServicesGetDetail> => {
+  const { userName, slugProduct } = req;
+
+  // @ts-ignore
+  const userPage = await userDatabase.getPage(userName);
+
+  // @ts-ignore
+  if (userPage.length === 0) {
+    throw new ServiceError(404, "User not found.");
+  }
+
+  const product = await productDatabase.getDetail(userName, slugProduct);
+
+  if (!product) {
+    throw new ServiceError(404, "Product not found.");
+  }
+
+  // @ts-ignore
+  const { userImage: ownerImage, userShopDescription: ownerShopDescription, totalRating: ownerTotalRating } = userPage[0];
+
+  const { userProvince: ownerProvince, userCity: ownerCity, userProvinceId: ownerProvinceId, userCityId: ownerCityId } = await userDatabase.getAddress(userName);
+
+  const detailProduct = { ...product, ownerImage, ownerShopDescription, ownerProvince, ownerProvinceId, ownerCity, ownerCityId, ownerTotalRating };
+
+  return detailProduct;
+};
+
+export default { getAll, insertOne, update, deleteOne, getDetail };
