@@ -33,4 +33,14 @@ const getUserPage: Handler = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export default { register, login, getUserPage };
+const getAddress: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const response = await userService.getAddress(req.params);
+
+    return customResponse({ statusCode: 200, message: "Data retrivied successfully", payload: response }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { register, login, getUserPage, getAddress };

@@ -8,6 +8,7 @@ import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
 import { loginUserValidation } from "../validation/userValidation.js";
 import { registerUserValidation } from "../validation/userValidation.js";
 import { IResponseGetProduct, IResponseUserUnverified } from "../interfaces/product/IProductResponse.js";
+import { IResponseUserServiceAccount } from "../interfaces/user/IUserResponse.js";
 
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);
@@ -79,4 +80,16 @@ const getUserPage = async (req: { userName: string } | any): Promise<IResponseGe
   return response;
 };
 
-export default { register, login, getUserPage };
+const getAddress = async (req: { userName: string } | any): Promise<IResponseUserServiceAccount> => {
+  const { userName } = req;
+
+  const userAddress = await userDatabase.getAddress(userName);
+
+  if (!userAddress) {
+    throw new ServiceError(404, "user not found.");
+  }
+
+  return userAddress;
+};
+
+export default { register, login, getUserPage, getAddress };

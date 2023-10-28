@@ -11,7 +11,8 @@ import { con } from "../../config/database.js";
 export function getAddress(userName) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield con
-            .query(`SELECT a.province AS userProvince,
+            .query(`SELECT u.id AS userId,
+              a.province AS userProvince,
               a.city AS userCity,
               a.province_id AS userProvinceId,
               a.city_id AS userCityId

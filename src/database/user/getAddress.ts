@@ -3,7 +3,8 @@ import { con } from "../../config/database.js";
 export async function getAddress(userName: string) {
   return await con
     .query(
-      `SELECT a.province AS userProvince,
+      `SELECT u.id AS userId,
+              a.province AS userProvince,
               a.city AS userCity,
               a.province_id AS userProvinceId,
               a.city_id AS userCityId

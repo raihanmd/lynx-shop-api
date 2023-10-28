@@ -36,4 +36,13 @@ const getUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         next(err);
     }
 });
-export default { register, login, getUserPage };
+const getAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield userService.getAddress(req.params);
+        return customResponse({ statusCode: 200, message: "Data retrivied successfully", payload: response }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+export default { register, login, getUserPage, getAddress };

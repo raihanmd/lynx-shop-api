@@ -65,4 +65,12 @@ const getUserPage = (req) => __awaiter(void 0, void 0, void 0, function* () {
     };
     return response;
 });
-export default { register, login, getUserPage };
+const getAddress = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userName } = req;
+    const userAddress = yield userDatabase.getAddress(userName);
+    if (!userAddress) {
+        throw new ServiceError(404, "user not found.");
+    }
+    return userAddress;
+});
+export default { register, login, getUserPage, getAddress };

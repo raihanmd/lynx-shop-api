@@ -6,6 +6,8 @@ import productController from "../controller/productController.js";
 
 const mainRouter = Router();
 
+mainRouter.get("/account/:userName", userController.getAddress);
+
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);
 

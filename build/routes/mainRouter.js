@@ -3,6 +3,7 @@ import userController from "../controller/userController.js";
 import productController from "../controller/productController.js";
 //? endpoint /v1/....
 const mainRouter = Router();
+mainRouter.get("/account/:userName", userController.getAddress);
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);
 mainRouter.get("/product", productController.getAll);
