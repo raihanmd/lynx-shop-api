@@ -1,12 +1,15 @@
 import { Router } from "express";
 import userController from "../controller/userController.js";
 import productController from "../controller/productController.js";
+import blurhashController from "../controller/blurhashController.js";
 
 //? endpoint /v1/....
 
 const mainRouter = Router();
 
 mainRouter.get("/account/:userName", userController.getAddress);
+
+mainRouter.post("/blurhash", blurhashController.getBlurhash);
 
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);
