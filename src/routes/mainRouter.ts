@@ -1,7 +1,9 @@
 import { Router } from "express";
+
 import userController from "../controller/userController.js";
 import productController from "../controller/productController.js";
 import blurhashController from "../controller/blurhashController.js";
+import cartController from "../controller/cartController.js";
 
 //? endpoint /v1/....
 
@@ -10,6 +12,12 @@ const mainRouter = Router();
 mainRouter.get("/account/:userName", userController.getAddress);
 
 mainRouter.post("/blurhash", blurhashController.getBlurhash);
+
+mainRouter.post("/cart", cartController.insertOne);
+mainRouter.put("/cart", cartController.update);
+mainRouter.delete("/cart", cartController.deleteOne);
+
+mainRouter.get("/cart/:userName", cartController.getAll);
 
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);

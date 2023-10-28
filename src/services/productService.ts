@@ -5,7 +5,7 @@ import getUnixTime from "../utils/getUnixTime.js";
 import productDatabase from "../database/product/productDatabase.js";
 import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
-import { IAddProductBody, IDeleteProductBody, IUpdateProductBody } from "../interfaces/product/IProductBody.js";
+import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody.js";
 import { ServiceError } from "../error/serviceError.js";
 import { addProductValidation, deleteProductValidation, updateProductValidation } from "../validation/productValidation.js";
 import userDatabase from "../database/user/userDatabase.js";
@@ -17,7 +17,7 @@ const getAll = async (): Promise<Array<object>> => {
   return products;
 };
 
-const insertOne = async (req: IAddProductBody): Promise<object> => {
+const insertOne = async (req: IPOSTProductBody): Promise<object> => {
   const productBody = validate(addProductValidation, req);
 
   const userWallet = await walletDatabase.getByUserId(productBody.userId);
@@ -36,7 +36,7 @@ const insertOne = async (req: IAddProductBody): Promise<object> => {
   return { isSucceed: true };
 };
 
-const update = async (req: IUpdateProductBody): Promise<object> => {
+const update = async (req: IPUTProductBody): Promise<object> => {
   const productBody = validate(updateProductValidation, req);
 
   await productDatabase.update(productBody);
@@ -44,7 +44,7 @@ const update = async (req: IUpdateProductBody): Promise<object> => {
   return { isSucceed: true };
 };
 
-const deleteOne = async (req: IDeleteProductBody): Promise<object> => {
+const deleteOne = async (req: IDELETEProductBody): Promise<object> => {
   const productBody = validate(deleteProductValidation, req);
 
   await productDatabase.deleteOne(productBody);

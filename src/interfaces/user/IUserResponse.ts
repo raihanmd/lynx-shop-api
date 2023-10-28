@@ -5,3 +5,8 @@ export interface IResponseUserServiceAccount {
   userCity: string | null;
   userCityId: number | null;
 }
+
+export interface IResponseUserUnverified {
+  userImage: string;
+  userName: string;
+}

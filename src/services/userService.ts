@@ -7,8 +7,8 @@ import { ServiceError } from "../error/serviceError.js";
 import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
 import { loginUserValidation } from "../validation/userValidation.js";
 import { registerUserValidation } from "../validation/userValidation.js";
-import { IResponseGetProduct, IResponseUserUnverified } from "../interfaces/product/IProductResponse.js";
-import { IResponseUserServiceAccount } from "../interfaces/user/IUserResponse.js";
+import { IResponseGetProduct } from "../interfaces/product/IProductResponse.js";
+import { IResponseUserServiceAccount, IResponseUserUnverified } from "../interfaces/user/IUserResponse.js";
 
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);

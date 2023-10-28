@@ -10,11 +10,6 @@ export interface IResponseGetProduct {
   userProduct: any;
 }
 
-export interface IResponseUserUnverified {
-  userImage: string;
-  userName: string;
-}
-
 export interface IResponseProductServicesGetDetail {
   productId: string;
   productName: string;

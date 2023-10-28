@@ -1,4 +1,4 @@
-export interface IAddProductBody {
+export interface IPOSTProductBody {
   productId?: string;
   productSlug?: string;
   createdAt?: string;
@@ -13,18 +13,16 @@ export interface IAddProductBody {
   blurhash: string;
 }
 
-export interface IUpdateProductBody {
+export interface IDELETEProductBody {
   userId: string;
   productId: string;
+}
+
+export interface IPUTProductBody extends IDELETEProductBody {
   productName: string;
   productPrice: number;
   productCategory: string;
   productDescription: string;
   productQuantity: number;
   productWeight: number;
-}
-
-export interface IDeleteProductBody {
-  userId: string;
-  productId: string;
 }

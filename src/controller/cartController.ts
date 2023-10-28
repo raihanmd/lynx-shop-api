@@ -2,6 +2,7 @@ import { Handler, NextFunction, Request, Response } from "express";
 
 import { customResponse } from "../utils/customResponse.js";
 import productService from "../services/productService.js";
+import userService from "../services/userService.js";
 
 const getAll: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
