@@ -3,7 +3,7 @@ import { Handler, NextFunction, Request, Response } from "express";
 import { customResponse } from "../utils/customResponse.js";
 import productService from "../services/productService.js";
 
-const getAll: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GETAll: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await productService.getAll();
 
@@ -13,7 +13,7 @@ const getAll: Handler = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-const insertOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const POST: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await productService.insertOne(req.body);
 
@@ -23,7 +23,7 @@ const insertOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-const update: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const PUT: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await productService.update(req.body);
 
@@ -33,7 +33,7 @@ const update: Handler = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-const deleteOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const DELETE: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await productService.deleteOne(req.body);
 
@@ -43,7 +43,7 @@ const deleteOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-const getProductDetail: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GETProductDetail: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const detailProduct = await productService.getDetail(req.params);
 
@@ -53,4 +53,4 @@ const getProductDetail: Handler = async (req: Request, res: Response, next: Next
   }
 };
 
-export default { getAll, insertOne, update, deleteOne, getProductDetail };
+export default { GETAll, POST, PUT, DELETE, GETProductDetail };

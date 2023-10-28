@@ -1,24 +1,25 @@
 import { Handler, NextFunction, Request, Response } from "express";
 
 import { customResponse } from "../utils/customResponse.js";
-import productService from "../services/productService.js";
-import userService from "../services/userService.js";
+import cartService from "../services/cartService.js";
 
-const getAll: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GET: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const products = await productService.getAll();
+    //@ts-ignore
+    const cartUser = await cartService.get(req.params);
 
-    return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: products }, res);
+    return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: cartUser }, res);
   } catch (err) {
     next(err);
   }
 };
 
+//!Belom beres
 const insertOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isSucceed = await productService.insertOne(req.body);
+    const isSucceed = await cartService.insertOne(req.body);
 
-    return customResponse({ statusCode: 200, message: "Product added successfully.", payload: isSucceed }, res);
+    return customResponse({ statusCode: 200, message: "Cart added successfully.", payload: isSucceed }, res);
   } catch (err) {
     next(err);
   }
@@ -26,9 +27,9 @@ const insertOne: Handler = async (req: Request, res: Response, next: NextFunctio
 
 const update: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isSucceed = await productService.update(req.body);
+    const isSucceed = await cartService.update(req.body);
 
-    return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+    return customResponse({ statusCode: 200, message: "Cart updated successfully.", payload: isSucceed }, res);
   } catch (err) {
     next(err);
   }
@@ -36,22 +37,12 @@ const update: Handler = async (req: Request, res: Response, next: NextFunction) 
 
 const deleteOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isSucceed = await productService.deleteOne(req.body);
+    const isSucceed = await cartService.deleteOne(req.body);
 
-    return customResponse({ statusCode: 200, message: "Product deleted successfully.", payload: isSucceed }, res);
+    return customResponse({ statusCode: 200, message: "Cart deleted successfully.", payload: isSucceed }, res);
   } catch (err) {
     next(err);
   }
 };
 
-const getProductDetail: Handler = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const detailProduct = await productService.getDetail(req.params);
-
-    return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: detailProduct }, res);
-  } catch (err) {
-    next(err);
-  }
-};
-
-export default { getAll, insertOne, update, deleteOne, getProductDetail };
+export default { GET, insertOne, update, deleteOne };

@@ -7,37 +7,44 @@ import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
 import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody.js";
 import { ServiceError } from "../error/serviceError.js";
-import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation.js";
 import userDatabase from "../database/user/userDatabase.js";
 import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse.js";
+import cartDatabase from "../database/cart/cartDatabase.js";
+import { DELETECartValidation, POSTCartValidation, PUTCartValidation } from "../validation/cartValidation.js";
 
-const getAll = async (): Promise<Array<object>> => {
-  const products = await productDatabase.getAll();
+const get = async (req: { userName: string }): Promise<object[] | string> => {
+  const { userName } = req;
 
-  return products;
-};
+  const isUserExist = await userDatabase.getUserName(userName);
 
-const insertOne = async (req: IPOSTProductBody): Promise<object> => {
-  const productBody = validate(POSTProductValidation, req);
+  console.log(isUserExist);
 
-  const userWallet = await walletDatabase.getByUserId(productBody.userId);
-
-  if (!userWallet) {
-    throw new ServiceError(403, "You must have the wallet first.");
+  //@ts-ignore
+  if (!isUserExist) {
+    throw new ServiceError(404, "User not found.");
   }
 
-  productBody.productId = PREFIX.PRODUCT;
-  //@ts-ignore
-  productBody.productSlug = slugify(productBody.productName, { lower: true });
-  productBody.createdAt = getUnixTime();
+  const userCart = await cartDatabase.get(userName);
 
-  await productDatabase.insertOne(productBody);
+  //@ts-ignore
+  if (userCart.length === 0) {
+    return "User cart empty.";
+  }
+
+  //@ts-ignore
+  return userCart;
+};
+//!Belom beres
+const insertOne = async (req: IPOSTProductBody): Promise<object> => {
+  const cartBody = validate(POSTCartValidation, req);
+
+  await cartDatabase.get(cartBody);
 
   return { isSucceed: true };
 };
 
 const update = async (req: IPUTProductBody): Promise<object> => {
-  const productBody = validate(PUTProductValidation, req);
+  const productBody = validate(PUTCartValidation, req);
 
   await productDatabase.updateOne(productBody);
 
@@ -45,7 +52,7 @@ const update = async (req: IPUTProductBody): Promise<object> => {
 };
 
 const deleteOne = async (req: IDELETEProductBody): Promise<object> => {
-  const productBody = validate(DELETEProductValidation, req);
+  const productBody = validate(DELETECartValidation, req);
 
   await productDatabase.deleteOne(productBody);
 
@@ -79,4 +86,4 @@ const getDetail = async (req: { userName: string } | any): Promise<IResponseProd
   return detailProduct;
 };
 
-export default { getAll, insertOne, update, deleteOne, getDetail };
+export default { get, insertOne, update, deleteOne, getDetail };

@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import userService from "../services/userService.js";
 import { customResponse } from "../utils/customResponse.js";
+import userService from "../services/userService.js";
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName } = yield userService.register(req.body);
-        return customResponse({ statusCode: 200, message: "User created", payload: { userName } }, res);
+        return customResponse({ statusCode: 200, message: "User created.", payload: { userName } }, res);
     }
     catch (err) {
         next(err);
@@ -21,28 +21,28 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName } = yield userService.login(req.body);
-        return customResponse({ statusCode: 200, message: "Login success", payload: { userName } }, res);
+        return customResponse({ statusCode: 200, message: "Login success.", payload: { userName } }, res);
     }
     catch (err) {
         next(err);
     }
 });
-const getUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const GETUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield userService.getUserPage(req.params);
-        return customResponse({ statusCode: 200, message: "Login success", payload: response }, res);
+        return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
     }
     catch (err) {
         next(err);
     }
 });
-const getAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const GETAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield userService.getAddress(req.params);
-        return customResponse({ statusCode: 200, message: "Data retrivied successfully", payload: response }, res);
+        return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
     }
     catch (err) {
         next(err);
     }
 });
-export default { register, login, getUserPage, getAddress };
+export default { register, login, GETUserPage, GETAddress };

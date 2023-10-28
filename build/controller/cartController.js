@@ -8,20 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { customResponse } from "../utils/customResponse.js";
-import productService from "../services/productService.js";
-const getAll = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+import cartService from "../services/cartService.js";
+const GET = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const products = yield productService.getAll();
-        return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: products }, res);
+        //@ts-ignore
+        const cartUser = yield cartService.get(req.params);
+        return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: cartUser }, res);
     }
     catch (err) {
         next(err);
     }
 });
+//!Belom beres
 const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const isSucceed = yield productService.insertOne(req.body);
-        return customResponse({ statusCode: 200, message: "Product added successfully.", payload: isSucceed }, res);
+        const isSucceed = yield cartService.insertOne(req.body);
+        return customResponse({ statusCode: 200, message: "Cart added successfully.", payload: isSucceed }, res);
     }
     catch (err) {
         next(err);
@@ -29,8 +31,8 @@ const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 });
 const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const isSucceed = yield productService.update(req.body);
-        return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
+        const isSucceed = yield cartService.update(req.body);
+        return customResponse({ statusCode: 200, message: "Cart updated successfully.", payload: isSucceed }, res);
     }
     catch (err) {
         next(err);
@@ -38,20 +40,11 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const isSucceed = yield productService.deleteOne(req.body);
-        return customResponse({ statusCode: 200, message: "Product deleted successfully.", payload: isSucceed }, res);
+        const isSucceed = yield cartService.deleteOne(req.body);
+        return customResponse({ statusCode: 200, message: "Cart deleted successfully.", payload: isSucceed }, res);
     }
     catch (err) {
         next(err);
     }
 });
-const getProductDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const detailProduct = yield productService.getDetail(req.params);
-        return customResponse({ statusCode: 200, message: "Data successfully retrieved.", payload: detailProduct }, res);
-    }
-    catch (err) {
-        next(err);
-    }
-});
-export default { getAll, insertOne, update, deleteOne, getProductDetail };
+export default { GET, insertOne, update, deleteOne };

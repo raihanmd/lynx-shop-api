@@ -1,5 +1,5 @@
 import Joi from "joi";
-export const addProductValidation = Joi.object({
+export const POSTProductValidation = Joi.object({
     productId: Joi.string().max(14).optional(),
     productSlug: Joi.string().max(100).optional(),
     createdAt: Joi.number().max(10).optional(),
@@ -13,7 +13,7 @@ export const addProductValidation = Joi.object({
     productImage: Joi.string().max(500).required(),
     blurhash: Joi.string().max(100).required(),
 });
-export const updateProductValidation = Joi.object({
+export const PUTProductValidation = Joi.object({
     userId: Joi.string().max(14).required(),
     productId: Joi.string().max(14).required(),
     productName: Joi.string().max(255).required(),
@@ -23,7 +23,7 @@ export const updateProductValidation = Joi.object({
     productQuantity: Joi.number().max(10).required(),
     productWeight: Joi.number().max(10).required(),
 });
-export const deleteProductValidation = Joi.object({
+export const DELETEProductValidation = Joi.object({
     userId: Joi.string().max(14).required(),
     productId: Joi.string().max(14).required(),
 });

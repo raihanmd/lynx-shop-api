@@ -1,13 +1,13 @@
 import { Handler, NextFunction, Request, Response } from "express";
 
-import userService from "../services/userService.js";
 import { customResponse } from "../utils/customResponse.js";
+import userService from "../services/userService.js";
 
 const register: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userName } = await userService.register(req.body);
 
-    return customResponse({ statusCode: 200, message: "User created", payload: { userName } }, res);
+    return customResponse({ statusCode: 200, message: "User created.", payload: { userName } }, res);
   } catch (err) {
     next(err);
   }
@@ -17,30 +17,30 @@ const login: Handler = async (req: Request, res: Response, next: NextFunction) =
   try {
     const { userName } = await userService.login(req.body);
 
-    return customResponse({ statusCode: 200, message: "Login success", payload: { userName } }, res);
+    return customResponse({ statusCode: 200, message: "Login success.", payload: { userName } }, res);
   } catch (err) {
     next(err);
   }
 };
 
-const getUserPage: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GETUserPage: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.getUserPage(req.params);
 
-    return customResponse({ statusCode: 200, message: "Login success", payload: response }, res);
+    return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
   } catch (err) {
     next(err);
   }
 };
 
-const getAddress: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GETAddress: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.getAddress(req.params);
 
-    return customResponse({ statusCode: 200, message: "Data retrivied successfully", payload: response }, res);
+    return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
   } catch (err) {
     next(err);
   }
 };
 
-export default { register, login, getUserPage, getAddress };
+export default { register, login, GETUserPage, GETAddress };

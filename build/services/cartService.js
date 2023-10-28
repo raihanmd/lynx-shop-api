@@ -7,39 +7,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import slugify from "slugify";
-import PREFIX from "../const/prefix.js";
-import getUnixTime from "../utils/getUnixTime.js";
 import productDatabase from "../database/product/productDatabase.js";
-import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
 import { ServiceError } from "../error/serviceError.js";
-import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation.js";
 import userDatabase from "../database/user/userDatabase.js";
-const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield productDatabase.getAll();
-    return products;
-});
-const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(POSTProductValidation, req);
-    const userWallet = yield walletDatabase.getByUserId(productBody.userId);
-    if (!userWallet) {
-        throw new ServiceError(403, "You must have the wallet first.");
-    }
-    productBody.productId = PREFIX.PRODUCT;
+import cartDatabase from "../database/cart/cartDatabase.js";
+import { DELETECartValidation, POSTCartValidation, PUTCartValidation } from "../validation/cartValidation.js";
+const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userName } = req;
+    const isUserExist = yield userDatabase.getUserName(userName);
+    console.log(isUserExist);
     //@ts-ignore
-    productBody.productSlug = slugify(productBody.productName, { lower: true });
-    productBody.createdAt = getUnixTime();
-    yield productDatabase.insertOne(productBody);
+    if (!isUserExist) {
+        throw new ServiceError(404, "User not found.");
+    }
+    const userCart = yield cartDatabase.get(userName);
+    //@ts-ignore
+    if (userCart.length === 0) {
+        return "User cart empty.";
+    }
+    //@ts-ignore
+    return userCart;
+});
+//!Belom beres
+const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const cartBody = validate(POSTCartValidation, req);
+    yield cartDatabase.get(cartBody);
     return { isSucceed: true };
 });
 const update = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(PUTProductValidation, req);
+    const productBody = validate(PUTCartValidation, req);
     yield productDatabase.updateOne(productBody);
     return { isSucceed: true };
 });
 const deleteOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(DELETEProductValidation, req);
+    const productBody = validate(DELETECartValidation, req);
     yield productDatabase.deleteOne(productBody);
     return { isSucceed: true };
 });
@@ -61,4 +63,4 @@ const getDetail = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const detailProduct = Object.assign(Object.assign({}, product), { ownerImage, ownerShopDescription, ownerProvince, ownerProvinceId, ownerCity, ownerCityId, ownerTotalRating });
     return detailProduct;
 });
-export default { getAll, insertOne, update, deleteOne, getDetail };
+export default { get, insertOne, update, deleteOne, getDetail };

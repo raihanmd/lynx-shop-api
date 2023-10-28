@@ -1,6 +1,6 @@
 import { con } from "../../config/database.js";
 
-export async function getAll(userName: string) {
+export async function get(userName: string) {
   return await con
     .query(
       `SELECT   c.id AS cartId,
