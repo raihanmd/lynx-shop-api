@@ -2,9 +2,8 @@ import supertest, { Response } from "supertest";
 
 import { app } from "../src/app/index";
 
-import { IRegisterUserBody } from "../src/interfaces/user/IRegisterUserBody";
-import { ILoginUserBody } from "../src/interfaces/user/ILoginUserBody";
-import { deleteTestUser } from "./testUtils";
+import { createTestUserVerify, deleteTestUser, deleteTestUserVerify } from "./testUtils";
+import { ILoginUserBody, IRegisterUserBody, IVerifyUserBody } from "../src/interfaces/user/IUserBody";
 
 afterAll(async () => {
   await deleteTestUser();
@@ -134,6 +133,59 @@ describe("GET /v1/account/:userName", () => {
     const result: Response = await supertest(app).get("/v1/account/wrong-username");
 
     expect(result.status).toBe(404);
+    expect(result.body.error).toBeDefined();
+  });
+});
+
+describe("POST /v1/verification", () => {
+  beforeEach(async () => {
+    await createTestUserVerify();
+  });
+
+  afterEach(async () => {
+    await deleteTestUserVerify();
+  });
+
+  it("should success verify user", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+
+    const request: IVerifyUserBody = {
+      userBio: "testVerify",
+      userCity: "testVerify",
+      userCityId: 1,
+      userId: "testVerify",
+      userProvince: "testVerify",
+      userProvinceId: 1,
+      userShopDesc: "testVerify",
+    };
+
+    const result: Response = await supertest(app).post("/v1/verification").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+
+    expect(result.status).toBe(200);
+    expect(result.body.payload.isSucceed).toBeDefined();
+    expect(result.body.message).toBe("User validation successfully, you now have Rp.1.000.000 free balance.");
+  });
+
+  it("Should reject if request is invalid", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+
+    const request: IVerifyUserBody = {
+      userBio: "",
+      userCity: "",
+      userCityId: 0,
+      userId: "",
+      userProvince: "",
+      userProvinceId: 1,
+      userShopDesc: "",
+    };
+
+    const result: Response = await supertest(app).post("/v1/verification").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+
+    expect(result.status).toBe(400);
     expect(result.body.error).toBeDefined();
   });
 });

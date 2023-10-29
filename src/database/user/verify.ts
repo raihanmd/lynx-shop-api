@@ -38,7 +38,7 @@ export async function verify({ userId, userProvince, userProvinceId, userCity, u
             if (fields.affectedRows <= 0) {
               //@ts-ignore
               if (fields.affectedRows <= 0) {
-                throw new DatabaseError("Failed to insert data.");
+                throw new DatabaseError("Failed to insert data. 3");
               }
             }
           });
