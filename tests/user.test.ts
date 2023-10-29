@@ -2,7 +2,7 @@ import supertest, { Response } from "supertest";
 
 import { app } from "../src/app/index";
 
-import { createTestUserDummy, deleteTestUser, deleteTestUserVerify } from "./testUtils";
+import { createTestUserVerification, deleteTestUser, deleteTestUserVerification } from "./testUtils";
 import { ILoginUserBody, IRegisterUserBody, IVerifyUserBody } from "../src/interfaces/user/IUserBody";
 
 afterAll(async () => {
@@ -139,11 +139,11 @@ describe("GET /v1/account/:userName", () => {
 
 describe("POST /v1/verification", () => {
   beforeEach(async () => {
-    await createTestUserDummy();
+    await createTestUserVerification();
   });
 
   afterEach(async () => {
-    await deleteTestUserVerify();
+    await deleteTestUserVerification();
   });
 
   it("should success verify user", async () => {
@@ -152,13 +152,13 @@ describe("POST /v1/verification", () => {
     }
 
     const request: IVerifyUserBody = {
-      userBio: "testDummy",
-      userCity: "testDummy",
+      userBio: "testVerif",
+      userCity: "testVerif",
       userCityId: 1,
-      userId: "testDummy",
-      userProvince: "testDummy",
+      userId: "testVerif",
+      userProvince: "testVerif",
       userProvinceId: 1,
-      userShopDesc: "testDummy",
+      userShopDesc: "testVerif",
     };
 
     const result: Response = await supertest(app).post("/v1/verification").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");

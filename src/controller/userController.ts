@@ -6,7 +6,6 @@ import userService from "../services/userService";
 const verify: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.verify(req.body);
-    console.log(req.body);
 
     return customResponse({ statusCode: 200, message: "User validation successfully, you now have Rp.1.000.000 free balance.", payload: response }, res);
   } catch (err) {

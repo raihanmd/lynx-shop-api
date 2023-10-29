@@ -10,8 +10,6 @@ const get = async (req: { userName: string }): Promise<object[] | string> => {
 
   const isUserExist = await userDatabase.getUserName(userName);
 
-  console.log(isUserExist);
-
   //@ts-ignore
   if (!isUserExist) {
     throw new ServiceError(404, "User not found.");

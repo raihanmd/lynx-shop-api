@@ -2,6 +2,18 @@ import supertest, { Response } from "supertest";
 
 import { app } from "../src/app";
 import { IDELETEProductBody, IPOSTProductBody, IPUTProductBody } from "../src/interfaces/product/IProductBody";
+import { createTestCategory, createTestUser, deleteTestCategory, deleteTestUser, verifyTestUser } from "./testUtils";
+
+beforeAll(async () => {
+  await createTestUser();
+  await verifyTestUser();
+  await createTestCategory();
+});
+
+afterAll(async () => {
+  await deleteTestUser();
+  await deleteTestCategory();
+});
 
 describe("GET /v1/product", () => {
   it("should get products", async () => {
