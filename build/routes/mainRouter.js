@@ -15,6 +15,7 @@ exports.mainRouter = mainRouter;
 mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
 mainRouter.post("/blurhash", blurhashController_1.default.getBlurhash);
+mainRouter.post("/verification", userController_1.default.verify);
 //!Belom beres
 mainRouter.post("/cart", cartController_1.default.insertOne);
 mainRouter.put("/cart", cartController_1.default.update);

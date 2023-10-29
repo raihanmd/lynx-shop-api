@@ -1,5 +1,5 @@
 import { con } from "../../config/database";
-import { ILoginUserBody } from "../../interfaces/user/ILoginUserBody";
+import { ILoginUserBody } from "../../interfaces/user/IUserBody";
 
 export async function login({ userOAuthId, userEmail, userProvider }: ILoginUserBody): Promise<{ username: string } | any> {
   return await con

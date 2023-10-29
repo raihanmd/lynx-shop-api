@@ -14,10 +14,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const customResponse_1 = require("../utils/customResponse");
 const userService_1 = __importDefault(require("../services/userService"));
+const verify = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield userService_1.default.verify(req.body);
+        console.log(req.body);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User validation successfully, you now have Rp.1.000.000 free balance.", payload: response }, res);
+    }
+    catch (err) {
+        next(err);
+    }
+});
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield userService_1.default.register(req.body);
+<<<<<<< HEAD
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User created.", payload: { userName: response } }, res);
+=======
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User created.", payload: response }, res);
+>>>>>>> development
     }
     catch (err) {
         next(err);
@@ -26,7 +40,11 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield userService_1.default.login(req.body);
+<<<<<<< HEAD
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Login success.", payload: { userName: response } }, res);
+=======
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Login success.", payload: response }, res);
+>>>>>>> development
     }
     catch (err) {
         next(err);
@@ -50,4 +68,4 @@ const GETAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(err);
     }
 });
-exports.default = { register, login, GETUserPage, GETAddress };
+exports.default = { verify, register, login, GETUserPage, GETAddress };

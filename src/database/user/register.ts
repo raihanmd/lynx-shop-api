@@ -1,6 +1,6 @@
 import { con } from "../../config/database";
 import { DatabaseError } from "../../error/databaseError";
-import { IRegisterUserBody } from "../../interfaces/user/IRegisterUserBody";
+import { IRegisterUserBody } from "../../interfaces/user/IUserBody";
 
 export async function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }: IRegisterUserBody): Promise<{ userName: string } | any> {
   return await con
