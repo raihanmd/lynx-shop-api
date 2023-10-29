@@ -26,7 +26,6 @@ export async function register({ userId, userName, userEmail, userOAuthId, userP
             }
           }
         });
-        await connection.query(`SELECT user_name AS userName FROM user WHERE id = ${userId}`).then(([rows]: Array<any>) => rows[0]?.userName);
         await connection.commit();
       } catch (err) {
         await connection.rollback();

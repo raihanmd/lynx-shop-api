@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+import { v4 } from "uuid";
 export function getNanoid() {
-    return nanoid(10);
+    return v4().replace(/-/g, "").substring(0, 10);
 }

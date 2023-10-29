@@ -1,9 +1,4 @@
-import slugify from "slugify";
-
-import PREFIX from "../const/prefix.js";
-import getUnixTime from "../utils/getUnixTime.js";
 import productDatabase from "../database/product/productDatabase.js";
-import walletDatabase from "../database/wallet/walletDatabase.js";
 import { validate } from "../utils/validation.js";
 import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody.js";
 import { ServiceError } from "../error/serviceError.js";

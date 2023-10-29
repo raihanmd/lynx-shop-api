@@ -34,7 +34,6 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                         }
                     }
                 });
-                yield connection.query(`SELECT user_name AS userName FROM user WHERE id = ${userId}`).then(([rows]) => { var _a; return (_a = rows[0]) === null || _a === void 0 ? void 0 : _a.userName; });
                 yield connection.commit();
             }
             catch (err) {

@@ -15,7 +15,8 @@ const register = async (req: IRegisterUserBody): Promise<{ userName: string }> =
 
   user.userId = PREFIX.USER + getNanoid();
 
-  const { userName } = await userDatabase.register(user);
+  await userDatabase.register(user);
+  const userName = await userDatabase.getUserName(user.userName);
 
   return userName;
 };
@@ -23,7 +24,7 @@ const register = async (req: IRegisterUserBody): Promise<{ userName: string }> =
 const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
   const loginRequest = validate(loginUserValidation, req);
 
-  const { userName } = await userDatabase.login(loginRequest);
+  const userName = await userDatabase.login(loginRequest);
 
   if (userName === undefined) {
     throw new ServiceError(401, "Unauthorized");

@@ -17,12 +17,13 @@ import { registerUserValidation } from "../validation/userValidation.js";
 const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const user = validate(registerUserValidation, req);
     user.userId = PREFIX.USER + getNanoid();
-    const { userName } = yield userDatabase.register(user);
+    yield userDatabase.register(user);
+    const userName = yield userDatabase.getUserName(user.userName);
     return userName;
 });
 const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const loginRequest = validate(loginUserValidation, req);
-    const { userName } = yield userDatabase.login(loginRequest);
+    const userName = yield userDatabase.login(loginRequest);
     if (userName === undefined) {
         throw new ServiceError(401, "Unauthorized");
     }
