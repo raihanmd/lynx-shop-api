@@ -1,5 +1,6 @@
 import { con } from "../src/config/database";
 import productDatabase from "../src/database/product/productDatabase";
+import userDatabase from "../src/database/user/userDatabase";
 
 export const deleteTestUser = async () => {
   await con.query("DELETE FROM user WHERE user_name = 'test'");
@@ -9,15 +10,19 @@ export const deleteTestUser = async () => {
 };
 
 export const deleteTestUserVerify = async () => {
-  await con.query("DELETE FROM user WHERE user_name = 'testVerify'");
-  await con.query("DELETE FROM user_detail WHERE image = 'testVerify'");
-  await con.query("DELETE FROM addresses WHERE province = 'testVerify'");
-  await con.query("DELETE FROM wallet WHERE id_user = 'testVerify'");
+  await con.query("DELETE FROM user WHERE user_name = 'testDummy'");
+  await con.query("DELETE FROM user_detail WHERE image = 'testDummy'");
+  await con.query("DELETE FROM addresses WHERE province = 'testDummy'");
+  await con.query("DELETE FROM wallet WHERE id_user = 'testDummy'");
 };
 
-export const createTestUserVerify = async () => {
-  await con.query(`INSERT INTO user (id, oauth_id, user_name, email, provider) VALUES ('testVerify', 'testVerify', 'testVerify', 'testVerify@testVerify.com', 'testVerify')`);
-  await con.query(`INSERT INTO user_detail (id_user, image) VALUES ('testVerify', 'testVerify')`);
+export const createTestUserDummy = async () => {
+  await con.query(`INSERT INTO user (id, oauth_id, user_name, email, provider) VALUES ('testDummy', 'testDummy', 'testDummy', 'testDummy@testDummy.com', 'testDummy')`);
+  await con.query(`INSERT INTO user_detail (id_user, image) VALUES ('testDummy', 'testDummy')`);
+};
+
+export const verifyTestUserDummy = async () => {
+  await userDatabase.verify({ userBio: "testDummy", userCity: "testDummy", userCityId: 1, userId: "testDummy", userProvince: "testDummy", userProvinceId: 1, userShopDesc: "testDummy" });
 };
 
 export const createTestProduct = async () => {

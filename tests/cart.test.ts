@@ -1,11 +1,11 @@
 import supertest, { Response } from "supertest";
 
 import { app } from "../src/app";
-import { createTestUser, deleteTestUser } from "./testUtils";
+import { createTestUserDummy, deleteTestUser } from "./testUtils";
 import { IPOSTCartBody } from "../src/interfaces/cart/ICartBody";
 
 beforeAll(async () => {
-  await createTestUser();
+  await createTestUserDummy();
 });
 
 afterAll(async () => {
