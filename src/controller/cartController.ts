@@ -14,7 +14,6 @@ const GET: Handler = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-//!Belom beres
 const insertOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await cartService.insertOne(req.body);

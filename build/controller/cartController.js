@@ -24,7 +24,6 @@ const GET = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         next(err);
     }
 });
-//!Belom beres
 const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isSucceed = yield cartService_1.default.insertOne(req.body);

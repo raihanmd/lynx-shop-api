@@ -7,7 +7,7 @@ const register: Handler = async (req: Request, res: Response, next: NextFunction
   try {
     const response = await userService.register(req.body);
 
-    return customResponse({ statusCode: 200, message: "User created.", payload: { userName: response.userName } }, res);
+    return customResponse({ statusCode: 200, message: "User created.", payload: { userName: response } }, res);
   } catch (err) {
     next(err);
   }
@@ -17,7 +17,7 @@ const login: Handler = async (req: Request, res: Response, next: NextFunction) =
   try {
     const response = await userService.login(req.body);
 
-    return customResponse({ statusCode: 200, message: "Login success.", payload: { userName: response.userName } }, res);
+    return customResponse({ statusCode: 200, message: "Login success.", payload: { userName: response } }, res);
   } catch (err) {
     next(err);
   }
