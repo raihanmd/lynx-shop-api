@@ -1,6 +1,6 @@
 import PREFIX from "../const/prefix.js";
 import userDatabase from "../database/user/userDatabase.js";
-import { IRegisterUserBody } from "../interfaces/user/IRegisterLoginUserBody.js";
+import { IRegisterUserBody } from "../interfaces/user/IRegisterUserBody.js";
 import { getNanoid } from "../utils/getNanoid.js";
 import { validate } from "../utils/validation.js";
 import { ServiceError } from "../error/serviceError.js";
