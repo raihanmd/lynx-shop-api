@@ -1,4 +1,5 @@
 import slugify from "slugify";
+
 import { con } from "../../config/database.js";
 import { DatabaseError } from "../../error/databaseError.js";
 import { ServiceError } from "../../error/serviceError.js";
