@@ -5,9 +5,9 @@ import userService from "../services/userService";
 
 const register: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { userName } = await userService.register(req.body);
+    const response = await userService.register(req.body);
 
-    return customResponse({ statusCode: 200, message: "User created.", payload: { userName } }, res);
+    return customResponse({ statusCode: 200, message: "User created.", payload: { userName: response.userName } }, res);
   } catch (err) {
     next(err);
   }
@@ -15,9 +15,9 @@ const register: Handler = async (req: Request, res: Response, next: NextFunction
 
 const login: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { userName } = await userService.login(req.body);
+    const response = await userService.login(req.body);
 
-    return customResponse({ statusCode: 200, message: "Login success.", payload: { userName } }, res);
+    return customResponse({ statusCode: 200, message: "Login success.", payload: { userName: response.userName } }, res);
   } catch (err) {
     next(err);
   }
