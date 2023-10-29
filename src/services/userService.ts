@@ -1,30 +1,37 @@
 import PREFIX from "../const/prefix";
 import userDatabase from "../database/user/userDatabase";
-import { IRegisterUserBody } from "../interfaces/user/IRegisterUserBody";
 import { getNanoid } from "../utils/getNanoid";
 import { validate } from "../utils/validation";
 import { ServiceError } from "../error/serviceError";
-import { ILoginUserBody } from "../interfaces/user/ILoginUserBody";
-import { loginUserValidation } from "../validation/userValidation";
+import { loginUserValidation, verifyUserValidation } from "../validation/userValidation";
 import { registerUserValidation } from "../validation/userValidation";
 import { IResponseGetProduct } from "../interfaces/product/IProductResponse";
 import { IResponseUserServiceAccount, IResponseUserUnverified } from "../interfaces/user/IUserResponse";
+import { ILoginUserBody, IRegisterUserBody, IVerifyUserBody } from "../interfaces/user/IUserBody";
+
+const verify = async (req: IVerifyUserBody): Promise<object> => {
+  const userBody = validate(verifyUserValidation, req);
+
+  await userDatabase.verify(userBody);
+
+  return { isSucceed: true };
+};
 
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
-  const user = validate(registerUserValidation, req);
+  const userBody = validate(registerUserValidation, req);
 
-  user.userId = PREFIX.USER + getNanoid();
+  userBody.userId = PREFIX.USER + getNanoid();
 
-  await userDatabase.register(user);
-  const userName = await userDatabase.getUserName(user.userName);
+  await userDatabase.register(userBody);
+  const userName = await userDatabase.getUserName(userBody.userName);
 
   return userName;
 };
 
 const login = async (req: ILoginUserBody): Promise<{ userName: string }> => {
-  const loginRequest = validate(loginUserValidation, req);
+  const userBody = validate(loginUserValidation, req);
 
-  const userName = await userDatabase.login(loginRequest);
+  const userName = await userDatabase.login(userBody);
 
   if (userName === undefined) {
     throw new ServiceError(401, "Unauthorized");
@@ -93,4 +100,4 @@ const getAddress = async (req: { userName: string } | any): Promise<IResponseUse
   return userAddress;
 };
 
-export default { register, login, getUserPage, getAddress };
+export default { verify, register, login, getUserPage, getAddress };

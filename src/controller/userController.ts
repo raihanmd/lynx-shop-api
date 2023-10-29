@@ -3,6 +3,16 @@ import { Handler, NextFunction, Request, Response } from "express";
 import { customResponse } from "../utils/customResponse";
 import userService from "../services/userService";
 
+const verify: Handler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const response = await userService.register(req.body);
+
+    return customResponse({ statusCode: 200, message: "User created.", payload: { userName: response.userName } }, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const register: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.register(req.body);
@@ -43,4 +53,4 @@ const GETAddress: Handler = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export default { register, login, GETUserPage, GETAddress };
+export default { verify, register, login, GETUserPage, GETAddress };

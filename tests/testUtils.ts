@@ -4,6 +4,7 @@ import walletDatabase from "../src/database/wallet/walletDatabase";
 
 export const deleteTestUser = async () => {
   await con.query("DELETE FROM user WHERE user_name = 'test'");
+  await con.query("DELETE FROM user_detail WHERE id_user = 'test'");
 };
 
 export const createTestUser = async () => {
