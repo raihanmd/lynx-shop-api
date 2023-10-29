@@ -13,6 +13,7 @@ mainRouter.get("/account/:userName", userController.GETAddress);
 mainRouter.get("/cart/:userName", cartController.GET);
 
 mainRouter.post("/blurhash", blurhashController.getBlurhash);
+mainRouter.post("/verification", userController.verify);
 
 //!Belom beres
 mainRouter.post("/cart", cartController.insertOne);
