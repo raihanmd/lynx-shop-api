@@ -1,14 +1,14 @@
 import supertest, { Response } from "supertest";
 
 import { app } from "../src/app/index";
-import { con } from "../src/config/database";
 
 import { IRegisterUserBody } from "../src/interfaces/user/IRegisterUserBody";
 import { ILoginUserBody } from "../src/interfaces/user/ILoginUserBody";
+import { createTestUser, deleteTestUser } from "./testUtils";
 
 describe("POST /v1/register", () => {
   afterEach(async () => {
-    await con.query("DELETE FROM user WHERE user_name = 'root'");
+    await deleteTestUser();
   });
 
   it("Should can register new user", async () => {
@@ -17,11 +17,11 @@ describe("POST /v1/register", () => {
     }
 
     const request: IRegisterUserBody = {
-      userOAuthId: "001",
-      userEmail: "root@root.com",
-      userName: "root",
-      userProvider: "root",
-      userImage: "root",
+      userOAuthId: "test",
+      userEmail: "test@test.com",
+      userName: "test",
+      userProvider: "test",
+      userImage: "test",
     };
 
     const result: Response = await supertest(app).post("/v1/register").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
@@ -29,13 +29,37 @@ describe("POST /v1/register", () => {
     expect(result.status).toBe(200);
     expect(result.body.statusCode).toBe(200);
     expect(result.body.payload.userName).toBeTruthy();
-    expect(result.body.payload.userName).toBe("root");
+    expect(result.body.payload.userName).toBe("test");
+  });
+
+  it("Should reject if request is invalid", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+
+    const request: IRegisterUserBody = {
+      userOAuthId: "",
+      userEmail: "",
+      userName: "",
+      userProvider: "",
+      userImage: "",
+    };
+
+    const result: Response = await supertest(app).post("/v1/register").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+
+    expect(result.status).toBe(400);
+    expect(result.body.statusCode).toBe(400);
+    expect(result.body.error).toBeDefined();
   });
 });
 
 describe("POST /v1/login", () => {
+  beforeEach(async () => {
+    await createTestUser();
+  });
+
   afterEach(async () => {
-    await con.query("DELETE FROM user WHERE user_name = 'root'");
+    await deleteTestUser();
   });
 
   it("Should can login user", async () => {
@@ -44,18 +68,52 @@ describe("POST /v1/login", () => {
     }
 
     const request: ILoginUserBody = {
-      userOAuthId: "001",
-      userEmail: "root@root.com",
-      userProvider: "root",
+      userOAuthId: "test",
+      userEmail: "test@test.com",
+      userProvider: "test",
     };
 
     const result: Response = await supertest(app).post("/v1/login").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
 
-    console.log(result);
-
     expect(result.status).toBe(200);
     expect(result.body.statusCode).toBe(200);
     expect(result.body.payload.userName).toBeTruthy();
-    expect(result.body.payload.userName).toBe("root");
+    expect(result.body.payload.userName).toBe("test");
+  });
+
+  it("Should be unauthorized", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+
+    const request: ILoginUserBody = {
+      userOAuthId: "wrong",
+      userEmail: "test@test.com",
+      userProvider: "test",
+    };
+
+    const result: Response = await supertest(app).post("/v1/login").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+
+    expect(result.status).toBe(401);
+    expect(result.body.statusCode).toBe(401);
+    expect(result.body.error).toBeDefined();
+  });
+
+  it("Should reject if request is invalid", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+
+    const request: ILoginUserBody = {
+      userOAuthId: "",
+      userEmail: "",
+      userProvider: "",
+    };
+
+    const result: Response = await supertest(app).post("/v1/login").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+
+    expect(result.status).toBe(400);
+    expect(result.body.statusCode).toBe(400);
+    expect(result.body.error).toBeDefined();
   });
 });
