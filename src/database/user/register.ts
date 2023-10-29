@@ -1,6 +1,6 @@
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { IRegisterUserBody } from "../../interfaces/user/IRegisterUserBody.js";
+import { con } from "../../config/database";
+import { DatabaseError } from "../../error/databaseError";
+import { IRegisterUserBody } from "../../interfaces/user/IRegisterUserBody";
 
 export async function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }: IRegisterUserBody): Promise<{ userName: string } | any> {
   return await con

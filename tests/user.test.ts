@@ -1,12 +1,12 @@
 import supertest, { Response } from "supertest";
 
-import { app } from "../build/app/index.js";
-import { con } from "../build/config/database.js";
+import { app } from "../src/app/index";
+import { con } from "../src/config/database";
 
-import { IRegisterUserBody } from "../src/interfaces/user/IRegisterUserBody.js";
-import { ILoginUserBody } from "../src/interfaces/user/ILoginUserBody.js";
+import { IRegisterUserBody } from "../src/interfaces/user/IRegisterUserBody";
+import { ILoginUserBody } from "../src/interfaces/user/ILoginUserBody";
 
-describe("POST /v1/user", () => {
+describe("POST /v1/register", () => {
   afterEach(async () => {
     await con.query("DELETE FROM user WHERE user_name = 'root'");
   });
@@ -30,6 +30,12 @@ describe("POST /v1/user", () => {
     expect(result.body.statusCode).toBe(200);
     expect(result.body.payload.userName).toBeTruthy();
     expect(result.body.payload.userName).toBe("root");
+  });
+});
+
+describe("POST /v1/login", () => {
+  afterEach(async () => {
+    await con.query("DELETE FROM user WHERE user_name = 'root'");
   });
 
   it("Should can login user", async () => {

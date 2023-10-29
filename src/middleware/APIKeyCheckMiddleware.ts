@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Response, NextFunction, Request } from "express";
 
-import { errorResponse } from "../utils/errorResponse.js";
+import { errorResponse } from "../utils/errorResponse";
 
 export const APIKeyCheckMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   if (req.method === "POST" && req.get("API-Key") !== process.env.API_KEY) {

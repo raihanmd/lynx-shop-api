@@ -1,7 +1,7 @@
-import { getAll } from "./getAll.js";
-import { insertOne } from "./insertOne.js";
-import { deleteOne } from "./deleteOne.js";
-import { getDetail } from "./getDetail.js";
-import { updateOne } from "./updateOne.js";
+import { getAll } from "./getAll";
+import { insertOne } from "./insertOne";
+import { deleteOne } from "./deleteOne";
+import { getDetail } from "./getDetail";
+import { updateOne } from "./updateOne";
 
 export default { getAll, insertOne, updateOne, deleteOne, getDetail };

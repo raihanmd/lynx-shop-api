@@ -1,4 +1,7 @@
-export const validate = (schema, request) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validate = void 0;
+const validate = (schema, request) => {
     const result = schema.validate(request, {
         abortEarly: false,
         allowUnknown: false,
@@ -10,3 +13,4 @@ export const validate = (schema, request) => {
         return result.value;
     }
 };
+exports.validate = validate;

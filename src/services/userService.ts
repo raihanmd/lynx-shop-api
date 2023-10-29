@@ -1,14 +1,14 @@
-import PREFIX from "../const/prefix.js";
-import userDatabase from "../database/user/userDatabase.js";
-import { IRegisterUserBody } from "../interfaces/user/IRegisterUserBody.js";
-import { getNanoid } from "../utils/getNanoid.js";
-import { validate } from "../utils/validation.js";
-import { ServiceError } from "../error/serviceError.js";
-import { ILoginUserBody } from "../interfaces/user/ILoginUserBody.js";
-import { loginUserValidation } from "../validation/userValidation.js";
-import { registerUserValidation } from "../validation/userValidation.js";
-import { IResponseGetProduct } from "../interfaces/product/IProductResponse.js";
-import { IResponseUserServiceAccount, IResponseUserUnverified } from "../interfaces/user/IUserResponse.js";
+import PREFIX from "../const/prefix";
+import userDatabase from "../database/user/userDatabase";
+import { IRegisterUserBody } from "../interfaces/user/IRegisterUserBody";
+import { getNanoid } from "../utils/getNanoid";
+import { validate } from "../utils/validation";
+import { ServiceError } from "../error/serviceError";
+import { ILoginUserBody } from "../interfaces/user/ILoginUserBody";
+import { loginUserValidation } from "../validation/userValidation";
+import { registerUserValidation } from "../validation/userValidation";
+import { IResponseGetProduct } from "../interfaces/product/IProductResponse";
+import { IResponseUserServiceAccount, IResponseUserUnverified } from "../interfaces/user/IUserResponse";
 
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const user = validate(registerUserValidation, req);

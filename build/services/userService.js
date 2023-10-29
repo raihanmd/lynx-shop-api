@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,35 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import PREFIX from "../const/prefix.js";
-import userDatabase from "../database/user/userDatabase.js";
-import { getNanoid } from "../utils/getNanoid.js";
-import { validate } from "../utils/validation.js";
-import { ServiceError } from "../error/serviceError.js";
-import { loginUserValidation } from "../validation/userValidation.js";
-import { registerUserValidation } from "../validation/userValidation.js";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const prefix_1 = __importDefault(require("../const/prefix"));
+const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
+const getNanoid_1 = require("../utils/getNanoid");
+const validation_1 = require("../utils/validation");
+const serviceError_1 = require("../error/serviceError");
+const userValidation_1 = require("../validation/userValidation");
+const userValidation_2 = require("../validation/userValidation");
 const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = validate(registerUserValidation, req);
-    user.userId = PREFIX.USER + getNanoid();
-    yield userDatabase.register(user);
-    const userName = yield userDatabase.getUserName(user.userName);
+    const user = (0, validation_1.validate)(userValidation_2.registerUserValidation, req);
+    user.userId = prefix_1.default.USER + (0, getNanoid_1.getNanoid)();
+    yield userDatabase_1.default.register(user);
+    const userName = yield userDatabase_1.default.getUserName(user.userName);
     return userName;
 });
 const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const loginRequest = validate(loginUserValidation, req);
-    const userName = yield userDatabase.login(loginRequest);
+    const loginRequest = (0, validation_1.validate)(userValidation_1.loginUserValidation, req);
+    const userName = yield userDatabase_1.default.login(loginRequest);
     if (userName === undefined) {
-        throw new ServiceError(401, "Unauthorized");
+        throw new serviceError_1.ServiceError(401, "Unauthorized");
     }
     return userName;
 });
 const getUserPage = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName } = req;
-    const userProduct = yield userDatabase.getProducts(userName);
-    const userPage = yield userDatabase.getPage(userName);
+    const userProduct = yield userDatabase_1.default.getProducts(userName);
+    const userPage = yield userDatabase_1.default.getPage(userName);
     // @ts-ignore
     if (userPage.length === 0) {
-        throw new ServiceError(404, "User not found.");
+        throw new serviceError_1.ServiceError(404, "User not found.");
     }
     // @ts-ignore
     const { userImage, userBanner, userBio, userShopDescription, totalRating } = userPage[0];
@@ -47,7 +52,7 @@ const getUserPage = (req) => __awaiter(void 0, void 0, void 0, function* () {
         };
         return response;
     }
-    const { userProvince, userCity } = yield userDatabase.getAddress(userName);
+    const { userProvince, userCity } = yield userDatabase_1.default.getAddress(userName);
     //@ts-ignore
     if (!userProduct[0].productId) {
         //@ts-ignore
@@ -68,10 +73,10 @@ const getUserPage = (req) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const getAddress = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName } = req;
-    const userAddress = yield userDatabase.getAddress(userName);
+    const userAddress = yield userDatabase_1.default.getAddress(userName);
     if (!userAddress) {
-        throw new ServiceError(404, "user not found.");
+        throw new serviceError_1.ServiceError(404, "user not found.");
     }
     return userAddress;
 });
-export default { register, login, getUserPage, getAddress };
+exports.default = { register, login, getUserPage, getAddress };

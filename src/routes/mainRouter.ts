@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import userController from "../controller/userController.js";
-import productController from "../controller/productController.js";
-import blurhashController from "../controller/blurhashController.js";
-import cartController from "../controller/cartController.js";
+import userController from "../controller/userController";
+import productController from "../controller/productController";
+import blurhashController from "../controller/blurhashController";
+import cartController from "../controller/cartController";
 
 //? endpoint /v1/....
 

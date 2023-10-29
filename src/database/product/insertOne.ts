@@ -1,11 +1,12 @@
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { ServiceError } from "../../error/serviceError.js";
-import { IPOSTProductBody } from "../../interfaces/product/IProductBody.js";
+import { con } from "../../config/database";
+import { DatabaseError } from "../../error/databaseError";
+import { ServiceError } from "../../error/serviceError";
+import { IPOSTProductBody } from "../../interfaces/product/IProductBody";
 
 export async function insertOne({ productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight, productSlug, userId, createdAt, productImage, blurhash }: IPOSTProductBody) {
   return await con
     .getConnection()
+    //@ts-ignore
     .then(async (connection) => {
       connection.beginTransaction();
       try {
@@ -21,6 +22,7 @@ export async function insertOne({ productId, productName, productPrice, productC
                   VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
                     '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${productWeight}, ${createdAt})`
           )
+          //@ts-ignore
           .then(([fields]) => {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
@@ -33,6 +35,7 @@ export async function insertOne({ productId, productName, productPrice, productC
         throw err;
       }
     })
+    //@ts-ignore
     .catch((err) => {
       throw err;
     });

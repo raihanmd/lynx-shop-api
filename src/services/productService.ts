@@ -1,15 +1,16 @@
+//@ts-ignore
 import slugify from "slugify";
 
-import PREFIX from "../const/prefix.js";
-import getUnixTime from "../utils/getUnixTime.js";
-import productDatabase from "../database/product/productDatabase.js";
-import walletDatabase from "../database/wallet/walletDatabase.js";
-import { validate } from "../utils/validation.js";
-import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody.js";
-import { ServiceError } from "../error/serviceError.js";
-import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation.js";
-import userDatabase from "../database/user/userDatabase.js";
-import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse.js";
+import PREFIX from "../const/prefix";
+import getUnixTime from "../utils/getUnixTime";
+import productDatabase from "../database/product/productDatabase";
+import walletDatabase from "../database/wallet/walletDatabase";
+import { validate } from "../utils/validation";
+import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody";
+import { ServiceError } from "../error/serviceError";
+import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation";
+import userDatabase from "../database/user/userDatabase";
+import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse";
 
 const getAll = async (): Promise<Array<object>> => {
   const products = await productDatabase.getAll();

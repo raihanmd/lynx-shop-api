@@ -1,4 +1,7 @@
-export const customResponse = ({ statusCode, message, payload }, res) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.customResponse = void 0;
+const customResponse = ({ statusCode, message, payload }, res) => {
     return res
         .set("Access-Control-Allow-Origin", "*")
         .set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
@@ -11,3 +14,4 @@ export const customResponse = ({ statusCode, message, payload }, res) => {
         message,
     });
 };
+exports.customResponse = customResponse;

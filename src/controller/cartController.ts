@@ -1,7 +1,7 @@
 import { Handler, NextFunction, Request, Response } from "express";
 
-import { customResponse } from "../utils/customResponse.js";
-import cartService from "../services/cartService.js";
+import { customResponse } from "../utils/customResponse";
+import cartService from "../services/cartService";
 
 const GET: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {

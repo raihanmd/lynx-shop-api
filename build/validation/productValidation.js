@@ -1,29 +1,36 @@
-import Joi from "joi";
-export const POSTProductValidation = Joi.object({
-    productId: Joi.string().max(14).optional(),
-    productSlug: Joi.string().max(100).optional(),
-    createdAt: Joi.number().max(10).optional(),
-    userId: Joi.string().max(14).required(),
-    productName: Joi.string().max(255).required(),
-    productPrice: Joi.number().max(20).required(),
-    productCategory: Joi.string().max(14).required(),
-    productDescription: Joi.string().max(65535).required(),
-    productQuantity: Joi.number().max(10).required(),
-    productWeight: Joi.number().max(10).required(),
-    productImage: Joi.string().max(500).required(),
-    blurhash: Joi.string().max(100).required(),
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DELETEProductValidation = exports.PUTProductValidation = exports.POSTProductValidation = void 0;
+//@ts-ignore
+const joi_1 = __importDefault(require("joi"));
+exports.POSTProductValidation = joi_1.default.object({
+    productId: joi_1.default.string().max(14).optional(),
+    productSlug: joi_1.default.string().max(100).optional(),
+    createdAt: joi_1.default.number().max(10).optional(),
+    userId: joi_1.default.string().max(14).required(),
+    productName: joi_1.default.string().max(255).required(),
+    productPrice: joi_1.default.number().max(20).required(),
+    productCategory: joi_1.default.string().max(14).required(),
+    productDescription: joi_1.default.string().max(65535).required(),
+    productQuantity: joi_1.default.number().max(10).required(),
+    productWeight: joi_1.default.number().max(10).required(),
+    productImage: joi_1.default.string().max(500).required(),
+    blurhash: joi_1.default.string().max(100).required(),
 });
-export const PUTProductValidation = Joi.object({
-    userId: Joi.string().max(14).required(),
-    productId: Joi.string().max(14).required(),
-    productName: Joi.string().max(255).required(),
-    productPrice: Joi.number().max(20).required(),
-    productCategory: Joi.string().max(14).required(),
-    productDescription: Joi.string().max(65535).required(),
-    productQuantity: Joi.number().max(10).required(),
-    productWeight: Joi.number().max(10).required(),
+exports.PUTProductValidation = joi_1.default.object({
+    userId: joi_1.default.string().max(14).required(),
+    productId: joi_1.default.string().max(14).required(),
+    productName: joi_1.default.string().max(255).required(),
+    productPrice: joi_1.default.number().max(20).required(),
+    productCategory: joi_1.default.string().max(14).required(),
+    productDescription: joi_1.default.string().max(65535).required(),
+    productQuantity: joi_1.default.number().max(10).required(),
+    productWeight: joi_1.default.number().max(10).required(),
 });
-export const DELETEProductValidation = Joi.object({
-    userId: Joi.string().max(14).required(),
-    productId: Joi.string().max(14).required(),
+exports.DELETEProductValidation = joi_1.default.object({
+    userId: joi_1.default.string().max(14).required(),
+    productId: joi_1.default.string().max(14).required(),
 });

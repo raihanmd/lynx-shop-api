@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,12 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { customResponse } from "../utils/customResponse.js";
-import userService from "../services/userService.js";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const customResponse_1 = require("../utils/customResponse");
+const userService_1 = __importDefault(require("../services/userService"));
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userName } = yield userService.register(req.body);
-        return customResponse({ statusCode: 200, message: "User created.", payload: { userName } }, res);
+        const { userName } = yield userService_1.default.register(req.body);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User created.", payload: { userName } }, res);
     }
     catch (err) {
         next(err);
@@ -20,8 +25,8 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userName } = yield userService.login(req.body);
-        return customResponse({ statusCode: 200, message: "Login success.", payload: { userName } }, res);
+        const { userName } = yield userService_1.default.login(req.body);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Login success.", payload: { userName } }, res);
     }
     catch (err) {
         next(err);
@@ -29,8 +34,8 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const GETUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield userService.getUserPage(req.params);
-        return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
+        const response = yield userService_1.default.getUserPage(req.params);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
     }
     catch (err) {
         next(err);
@@ -38,11 +43,11 @@ const GETUserPage = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 });
 const GETAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield userService.getAddress(req.params);
-        return customResponse({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
+        const response = yield userService_1.default.getAddress(req.params);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Data retrivied successfully.", payload: response }, res);
     }
     catch (err) {
         next(err);
     }
 });
-export default { register, login, GETUserPage, GETAddress };
+exports.default = { register, login, GETUserPage, GETAddress };

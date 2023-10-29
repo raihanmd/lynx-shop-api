@@ -1,9 +1,9 @@
 import express, { Express } from "express";
 
-import cacheControl from "../cahce/cahceControl.js";
-import { mainRouter } from "../routes/mainRouter.js";
-import { errorMiddleware } from "../middleware/errorMiddleware.js";
-import { APIKeyCheckMiddleware } from "../middleware/APIKeyCheckMiddleware.js";
+import cacheControl from "../cahce/cahceControl";
+import { mainRouter } from "../routes/mainRouter";
+import { errorMiddleware } from "../middleware/errorMiddleware";
+import { APIKeyCheckMiddleware } from "../middleware/APIKeyCheckMiddleware";
 
 const app: Express = express();
 app.use(express.json());

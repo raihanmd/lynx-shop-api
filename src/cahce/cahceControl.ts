@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+//@ts-ignore
 import NodeCache from "node-cache";
 
 const cache = new NodeCache();

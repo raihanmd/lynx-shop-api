@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,13 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import slugify from "slugify";
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { ServiceError } from "../../error/serviceError.js";
-export function updateOne({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight }) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateOne = void 0;
+//@ts-ignore
+const slugify_1 = __importDefault(require("slugify"));
+const database_1 = require("../../config/database");
+const databaseError_1 = require("../../error/databaseError");
+const serviceError_1 = require("../../error/serviceError");
+function updateOne({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield con
+        return yield database_1.con
             .getConnection()
             .then((connection) => __awaiter(this, void 0, void 0, function* () {
             connection.beginTransaction();
@@ -21,10 +28,10 @@ export function updateOne({ userId, productId, productName, productPrice, produc
                 //@ts-ignore
                 const [idCategory = rows] = yield connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
                 if (idCategory.length <= 0) {
-                    throw new ServiceError(404, "Product not found.");
+                    throw new serviceError_1.ServiceError(404, "Product not found.");
                 }
                 //@ts-ignore
-                const productSlug = slugify(productName);
+                const productSlug = (0, slugify_1.default)(productName);
                 yield connection
                     .query(`UPDATE products 
                 SET id_categories = '${idCategory[0].id}', 
@@ -38,7 +45,7 @@ export function updateOne({ userId, productId, productName, productPrice, produc
                     .then(([fields]) => {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {
-                        throw new DatabaseError("Failed to update product.");
+                        throw new databaseError_1.DatabaseError("Failed to update product.");
                     }
                 });
                 yield connection.commit();
@@ -53,3 +60,4 @@ export function updateOne({ userId, productId, productName, productPrice, produc
         });
     });
 }
+exports.updateOne = updateOne;

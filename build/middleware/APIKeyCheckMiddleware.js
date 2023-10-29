@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,13 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import "dotenv/config";
-import { errorResponse } from "../utils/errorResponse.js";
-export const APIKeyCheckMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.APIKeyCheckMiddleware = void 0;
+require("dotenv/config");
+const errorResponse_1 = require("../utils/errorResponse");
+const APIKeyCheckMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.method === "POST" && req.get("API-Key") !== process.env.API_KEY) {
-        return errorResponse({ statusCode: 400, error: "Guest can't do the POST request." }, res);
+        return (0, errorResponse_1.errorResponse)({ statusCode: 400, error: "Guest can't do the POST request." }, res);
     }
     else {
         next();
     }
 });
+exports.APIKeyCheckMiddleware = APIKeyCheckMiddleware;

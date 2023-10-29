@@ -1,6 +1,6 @@
-import { get } from "./get.js";
-import { insertOne } from "./insertOne.js";
-import { deleteOne } from "./deleteOne.js";
-import { updateOne } from "./updateOne.js";
+import { get } from "./get";
+import { insertOne } from "./insertOne";
+import { deleteOne } from "./deleteOne";
+import { updateOne } from "./updateOne";
 
 export default { get, insertOne, deleteOne, updateOne };

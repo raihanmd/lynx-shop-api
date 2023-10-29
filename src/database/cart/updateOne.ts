@@ -1,7 +1,7 @@
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { ServiceError } from "../../error/serviceError.js";
-import { IPUTCartBody } from "../../interfaces/cart/ICartBody.js";
+import { con } from "../../config/database";
+import { DatabaseError } from "../../error/databaseError";
+import { ServiceError } from "../../error/serviceError";
+import { IPUTCartBody } from "../../interfaces/cart/ICartBody";
 
 export async function updateOne({ idCart, idUser, idProduct, quantityProduct }: IPUTCartBody) {
   return await con

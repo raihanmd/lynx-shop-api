@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,58 +8,63 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import slugify from "slugify";
-import PREFIX from "../const/prefix.js";
-import getUnixTime from "../utils/getUnixTime.js";
-import productDatabase from "../database/product/productDatabase.js";
-import walletDatabase from "../database/wallet/walletDatabase.js";
-import { validate } from "../utils/validation.js";
-import { ServiceError } from "../error/serviceError.js";
-import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation.js";
-import userDatabase from "../database/user/userDatabase.js";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+//@ts-ignore
+const slugify_1 = __importDefault(require("slugify"));
+const prefix_1 = __importDefault(require("../const/prefix"));
+const getUnixTime_1 = __importDefault(require("../utils/getUnixTime"));
+const productDatabase_1 = __importDefault(require("../database/product/productDatabase"));
+const walletDatabase_1 = __importDefault(require("../database/wallet/walletDatabase"));
+const validation_1 = require("../utils/validation");
+const serviceError_1 = require("../error/serviceError");
+const productValidation_1 = require("../validation/productValidation");
+const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield productDatabase.getAll();
+    const products = yield productDatabase_1.default.getAll();
     return products;
 });
 const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(POSTProductValidation, req);
-    const userWallet = yield walletDatabase.getByUserId(productBody.userId);
+    const productBody = (0, validation_1.validate)(productValidation_1.POSTProductValidation, req);
+    const userWallet = yield walletDatabase_1.default.getByUserId(productBody.userId);
     if (!userWallet) {
-        throw new ServiceError(403, "You must have the wallet first.");
+        throw new serviceError_1.ServiceError(403, "You must have the wallet first.");
     }
-    productBody.productId = PREFIX.PRODUCT;
+    productBody.productId = prefix_1.default.PRODUCT;
     //@ts-ignore
-    productBody.productSlug = slugify(productBody.productName, { lower: true });
-    productBody.createdAt = getUnixTime();
-    yield productDatabase.insertOne(productBody);
+    productBody.productSlug = (0, slugify_1.default)(productBody.productName, { lower: true });
+    productBody.createdAt = (0, getUnixTime_1.default)();
+    yield productDatabase_1.default.insertOne(productBody);
     return { isSucceed: true };
 });
 const update = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(PUTProductValidation, req);
-    yield productDatabase.updateOne(productBody);
+    const productBody = (0, validation_1.validate)(productValidation_1.PUTProductValidation, req);
+    yield productDatabase_1.default.updateOne(productBody);
     return { isSucceed: true };
 });
 const deleteOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const productBody = validate(DELETEProductValidation, req);
-    yield productDatabase.deleteOne(productBody);
+    const productBody = (0, validation_1.validate)(productValidation_1.DELETEProductValidation, req);
+    yield productDatabase_1.default.deleteOne(productBody);
     return { isSucceed: true };
 });
 const getDetail = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName, slugProduct } = req;
     // @ts-ignore
-    const userPage = yield userDatabase.getPage(userName);
+    const userPage = yield userDatabase_1.default.getPage(userName);
     // @ts-ignore
     if (userPage.length === 0) {
-        throw new ServiceError(404, "User not found.");
+        throw new serviceError_1.ServiceError(404, "User not found.");
     }
-    const product = yield productDatabase.getDetail(userName, slugProduct);
+    const product = yield productDatabase_1.default.getDetail(userName, slugProduct);
     if (!product) {
-        throw new ServiceError(404, "Product not found.");
+        throw new serviceError_1.ServiceError(404, "Product not found.");
     }
     // @ts-ignore
     const { userImage: ownerImage, userShopDescription: ownerShopDescription, totalRating: ownerTotalRating } = userPage[0];
-    const { userProvince: ownerProvince, userCity: ownerCity, userProvinceId: ownerProvinceId, userCityId: ownerCityId } = yield userDatabase.getAddress(userName);
+    const { userProvince: ownerProvince, userCity: ownerCity, userProvinceId: ownerProvinceId, userCityId: ownerCityId } = yield userDatabase_1.default.getAddress(userName);
     const detailProduct = Object.assign(Object.assign({}, product), { ownerImage, ownerShopDescription, ownerProvince, ownerProvinceId, ownerCity, ownerCityId, ownerTotalRating });
     return detailProduct;
 });
-export default { getAll, insertOne, update, deleteOne, getDetail };
+exports.default = { getAll, insertOne, update, deleteOne, getDetail };

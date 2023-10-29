@@ -1,3 +1,3 @@
-import { getByUserId } from "./getWalletByUserId.js";
+import { getByUserId } from "./getWalletByUserId";
 
 export default { getByUserId };

@@ -1,9 +1,10 @@
 import { Response, NextFunction, Request, ErrorRequestHandler } from "express";
+//@ts-ignore
 import Joi from "joi";
 
-import { ServiceError } from "../error/serviceError.js";
-import { errorResponse } from "../utils/errorResponse.js";
-import { DatabaseError } from "../error/databaseError.js";
+import { ServiceError } from "../error/serviceError";
+import { errorResponse } from "../utils/errorResponse";
+import { DatabaseError } from "../error/databaseError";
 
 interface IErrorMiddleware extends ErrorRequestHandler {
   (err: Error, req: Request, res: Response, next: NextFunction): void;

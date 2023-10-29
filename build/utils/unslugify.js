@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const unslugify = (slug) => {
     const words = slug.split("-");
     const capitalizeFirstLetter = (word, index) => {
@@ -9,4 +11,4 @@ const unslugify = (slug) => {
     const capitalizedWords = words.map(capitalizeFirstLetter);
     return capitalizedWords.join(" ");
 };
-export default unslugify;
+exports.default = unslugify;

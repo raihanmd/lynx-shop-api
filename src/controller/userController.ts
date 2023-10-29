@@ -1,7 +1,7 @@
 import { Handler, NextFunction, Request, Response } from "express";
 
-import { customResponse } from "../utils/customResponse.js";
-import userService from "../services/userService.js";
+import { customResponse } from "../utils/customResponse";
+import userService from "../services/userService";
 
 const register: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {

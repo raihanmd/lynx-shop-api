@@ -1,11 +1,11 @@
-import productDatabase from "../database/product/productDatabase.js";
-import { validate } from "../utils/validation.js";
-import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody.js";
-import { ServiceError } from "../error/serviceError.js";
-import userDatabase from "../database/user/userDatabase.js";
-import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse.js";
-import cartDatabase from "../database/cart/cartDatabase.js";
-import { DELETECartValidation, POSTCartValidation, PUTCartValidation } from "../validation/cartValidation.js";
+import productDatabase from "../database/product/productDatabase";
+import { validate } from "../utils/validation";
+import { IPOSTProductBody, IDELETEProductBody, IPUTProductBody } from "../interfaces/product/IProductBody";
+import { ServiceError } from "../error/serviceError";
+import userDatabase from "../database/user/userDatabase";
+import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse";
+import cartDatabase from "../database/cart/cartDatabase";
+import { DELETECartValidation, POSTCartValidation, PUTCartValidation } from "../validation/cartValidation";
 
 const get = async (req: { userName: string }): Promise<object[] | string> => {
   const { userName } = req;

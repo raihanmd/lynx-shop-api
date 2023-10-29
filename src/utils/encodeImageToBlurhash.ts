@@ -1,5 +1,8 @@
+//@ts-ignore
 import axios from "axios";
+//@ts-ignore
 import sharp from "sharp";
+//@ts-ignore
 import { encode } from "blurhash";
 
 export const convertToPNG = async (inputBlob: Buffer): Promise<Buffer> => {

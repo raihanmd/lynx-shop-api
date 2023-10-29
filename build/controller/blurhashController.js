@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,15 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { customResponse } from "../utils/customResponse.js";
-import blurhashService from "../services/blurhashService.js";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const customResponse_1 = require("../utils/customResponse");
+const blurhashService_1 = __importDefault(require("../services/blurhashService"));
 const getBlurhash = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blurahsh = yield blurhashService.getBlurhash(req.body);
-        return customResponse({ statusCode: 200, message: "User created", payload: blurahsh }, res);
+        const blurahsh = yield blurhashService_1.default.getBlurhash(req.body);
+        return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User created", payload: blurahsh }, res);
     }
     catch (err) {
         next(err);
     }
 });
-export default { getBlurhash };
+exports.default = { getBlurhash };

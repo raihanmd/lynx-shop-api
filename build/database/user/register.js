@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-export function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.register = void 0;
+const database_1 = require("../../config/database");
+const databaseError_1 = require("../../error/databaseError");
+function register({ userId, userName, userEmail, userOAuthId, userProvider, userImage }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield con
+        return yield database_1.con
             .getConnection()
             .then((connection) => __awaiter(this, void 0, void 0, function* () {
             connection.beginTransaction();
@@ -21,7 +24,7 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new DatabaseError("Failed to insert user.");
+                            throw new databaseError_1.DatabaseError("Failed to insert user.");
                         }
                     }
                 });
@@ -30,7 +33,7 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
                     if (fields.affectedRows <= 0) {
                         //@ts-ignore
                         if (fields.affectedRows <= 0) {
-                            throw new DatabaseError("Failed to insert user.");
+                            throw new databaseError_1.DatabaseError("Failed to insert user.");
                         }
                     }
                 });
@@ -46,3 +49,4 @@ export function register({ userId, userName, userEmail, userOAuthId, userProvide
         });
     });
 }
+exports.register = register;

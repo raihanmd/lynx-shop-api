@@ -1,9 +1,10 @@
+//@ts-ignore
 import slugify from "slugify";
 
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { ServiceError } from "../../error/serviceError.js";
-import { IPUTProductBody } from "../../interfaces/product/IProductBody.js";
+import { con } from "../../config/database";
+import { DatabaseError } from "../../error/databaseError";
+import { ServiceError } from "../../error/serviceError";
+import { IPUTProductBody } from "../../interfaces/product/IProductBody";
 
 export async function updateOne({ userId, productId, productName, productPrice, productCategory, productDescription, productQuantity, productWeight }: IPUTProductBody) {
   return await con

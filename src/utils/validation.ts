@@ -1,3 +1,4 @@
+//@ts-ignore
 import { Schema } from "joi";
 
 export const validate = (schema: Schema, request: any) => {

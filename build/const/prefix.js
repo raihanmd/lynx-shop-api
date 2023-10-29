@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const PREFIX = {
     USER: "usr_",
     PRODUCT: "prd_",
@@ -7,4 +9,4 @@ const PREFIX = {
     WISHLIST: "wsh_",
     REVIEWS: "rev_",
 };
-export default PREFIX;
+exports.default = PREFIX;

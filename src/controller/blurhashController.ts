@@ -1,7 +1,7 @@
 import { Handler, NextFunction, Request, Response } from "express";
 
-import { customResponse } from "../utils/customResponse.js";
-import blurhashService from "../services/blurhashService.js";
+import { customResponse } from "../utils/customResponse";
+import blurhashService from "../services/blurhashService";
 
 const getBlurhash: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {

@@ -1,5 +1,5 @@
-import { ServiceError } from "../error/serviceError.js";
-import { encodeImageToBlurhash } from "../utils/encodeImageToBlurhash.js";
+import { ServiceError } from "../error/serviceError";
+import { encodeImageToBlurhash } from "../utils/encodeImageToBlurhash";
 
 const getBlurhash = async (req: { productImage: string }): Promise<string> => {
   const { productImage } = req;

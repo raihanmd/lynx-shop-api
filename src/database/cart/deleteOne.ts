@@ -1,6 +1,6 @@
-import { con } from "../../config/database.js";
-import { DatabaseError } from "../../error/databaseError.js";
-import { IDELETECartBody } from "../../interfaces/cart/ICartBody.js";
+import { con } from "../../config/database";
+import { DatabaseError } from "../../error/databaseError";
+import { IDELETECartBody } from "../../interfaces/cart/ICartBody";
 
 export async function deleteOne({ idCart, idUser }: IDELETECartBody) {
   return await con

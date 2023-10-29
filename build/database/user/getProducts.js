@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,10 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { con } from "../../config/database.js";
-export function getProducts(userName) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getProducts = void 0;
+const database_1 = require("../../config/database");
+function getProducts(userName) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield con
+        return yield database_1.con
             .query(`SELECT p.id AS productId,
               p.slug AS productSlug,
               p.name AS productName,
@@ -36,3 +39,4 @@ export function getProducts(userName) {
         });
     });
 }
+exports.getProducts = getProducts;

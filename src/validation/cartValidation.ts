@@ -1,3 +1,4 @@
+//@ts-ignore
 import Joi from "joi";
 
 export const POSTCartValidation = Joi.object({

@@ -1,4 +1,4 @@
-import { con } from "../../config/database.js";
+import { con } from "../../config/database";
 
 export async function getProducts(userName: string) {
   return await con
