@@ -19,6 +19,7 @@ mainRouter.post("/blurhash", blurhashController_1.default.getBlurhash);
 mainRouter.post("/cart", cartController_1.default.insertOne);
 mainRouter.put("/cart", cartController_1.default.update);
 mainRouter.delete("/cart", cartController_1.default.deleteOne);
+//!
 mainRouter.post("/register", userController_1.default.register);
 mainRouter.post("/login", userController_1.default.login);
 mainRouter.get("/product", productController_1.default.GETAll);

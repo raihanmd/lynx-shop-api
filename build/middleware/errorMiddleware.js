@@ -22,6 +22,7 @@ const errorMiddleware = (err, req, res, next) => __awaiter(void 0, void 0, void 
     if (!err) {
         return next();
     }
+    console.log(err);
     if (err instanceof serviceError_1.ServiceError) {
         return (0, errorResponse_1.errorResponse)({ statusCode: err.statusCode, error: err.message }, res);
     }

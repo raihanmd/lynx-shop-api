@@ -9,6 +9,9 @@ describe("GET /v1/product", () => {
   //   expect(result.status).toBe(200);
   //   expect(result.body.payload).toBeDefined();
   // });
+});
+
+describe("POST /v1/product", () => {
   // it("should success insert product", async () => {
   //   if (!process.env.API_KEY) {
   //     throw new Error("API_KEY is not defined in the environment variables.");
@@ -29,7 +32,10 @@ describe("GET /v1/product", () => {
   //   expect(result.body.payload).toBeDefined();
   //   expect(result.body.message).toBe("Product added successfully.");
   // });
-  // it("should success insert product", async () => {
+});
+
+describe("PUT /v1/product", () => {
+  // it("should success update product", async () => {
   //   if (!process.env.API_KEY) {
   //     throw new Error("API_KEY is not defined in the environment variables.");
   //   }
@@ -48,6 +54,9 @@ describe("GET /v1/product", () => {
   //   expect(result.body.payload).toBeDefined();
   //   expect(result.body.message).toBe("Product updated successfully.");
   // });
+});
+
+describe("DELETE /v1/product", () => {
   // it("should success delete product", async () => {
   //   if (!process.env.API_KEY) {
   //     throw new Error("API_KEY is not defined in the environment variables.");
@@ -62,3 +71,5 @@ describe("GET /v1/product", () => {
   //   expect(result.body.message).toBe("Product deleted successfully.");
   // });
 });
+
+describe("GET /v1/:userName/:slugProduct", () => {});
