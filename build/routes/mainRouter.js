@@ -15,10 +15,12 @@ exports.mainRouter = mainRouter;
 mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
 mainRouter.post("/blurhash", blurhashController_1.default.getBlurhash);
+mainRouter.post("/verification", userController_1.default.verify);
 //!Belom beres
 mainRouter.post("/cart", cartController_1.default.insertOne);
 mainRouter.put("/cart", cartController_1.default.update);
 mainRouter.delete("/cart", cartController_1.default.deleteOne);
+//!
 mainRouter.post("/register", userController_1.default.register);
 mainRouter.post("/login", userController_1.default.login);
 mainRouter.get("/product", productController_1.default.GETAll);

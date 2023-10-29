@@ -19,16 +19,21 @@ const validation_1 = require("../utils/validation");
 const serviceError_1 = require("../error/serviceError");
 const userValidation_1 = require("../validation/userValidation");
 const userValidation_2 = require("../validation/userValidation");
+const verify = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const userBody = (0, validation_1.validate)(userValidation_1.verifyUserValidation, req);
+    yield userDatabase_1.default.verify(userBody);
+    return { isSucceed: true };
+});
 const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = (0, validation_1.validate)(userValidation_2.registerUserValidation, req);
-    user.userId = prefix_1.default.USER + (0, getNanoid_1.getNanoid)();
-    yield userDatabase_1.default.register(user);
-    const userName = yield userDatabase_1.default.getUserName(user.userName);
+    const userBody = (0, validation_1.validate)(userValidation_2.registerUserValidation, req);
+    userBody.userId = prefix_1.default.USER + (0, getNanoid_1.getNanoid)();
+    yield userDatabase_1.default.register(userBody);
+    const userName = yield userDatabase_1.default.getUserName(userBody.userName);
     return userName;
 });
 const login = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const loginRequest = (0, validation_1.validate)(userValidation_1.loginUserValidation, req);
-    const userName = yield userDatabase_1.default.login(loginRequest);
+    const userBody = (0, validation_1.validate)(userValidation_1.loginUserValidation, req);
+    const userName = yield userDatabase_1.default.login(userBody);
     if (userName === undefined) {
         throw new serviceError_1.ServiceError(401, "Unauthorized");
     }
@@ -79,4 +84,4 @@ const getAddress = (req) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return userAddress;
 });
-exports.default = { register, login, getUserPage, getAddress };
+exports.default = { verify, register, login, getUserPage, getAddress };
