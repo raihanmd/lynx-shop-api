@@ -4,13 +4,13 @@ import { app } from "../src/app/index";
 
 import { IRegisterUserBody } from "../src/interfaces/user/IRegisterUserBody";
 import { ILoginUserBody } from "../src/interfaces/user/ILoginUserBody";
-import { createTestUser, deleteTestUser } from "./testUtils";
+import { deleteTestUser } from "./testUtils";
+
+afterAll(async () => {
+  await deleteTestUser();
+});
 
 describe("POST /v1/register", () => {
-  afterEach(async () => {
-    await deleteTestUser();
-  });
-
   it("Should can register new user", async () => {
     if (!process.env.API_KEY) {
       throw new Error("API_KEY is not defined in the environment variables.");
@@ -52,14 +52,6 @@ describe("POST /v1/register", () => {
 });
 
 describe("POST /v1/login", () => {
-  beforeEach(async () => {
-    await createTestUser();
-  });
-
-  afterEach(async () => {
-    await deleteTestUser();
-  });
-
   it("Should can login user", async () => {
     if (!process.env.API_KEY) {
       throw new Error("API_KEY is not defined in the environment variables.");
@@ -115,14 +107,31 @@ describe("POST /v1/login", () => {
 
 describe("GET /v1/:userName", () => {
   it("should get user page", async () => {
-    const result: Response = await supertest(app).get("/v1/muhammad-raihan");
+    const result: Response = await supertest(app).get("/v1/test");
+
+    expect(result.status).toBe(200);
+    expect(result.body.payload).toBeDefined();
+    expect(result.body.payload.userName).toBe("test");
+  });
+
+  it("should return 404", async () => {
+    const result: Response = await supertest(app).get("/v1/wrong-username");
+
+    expect(result.status).toBe(404);
+    expect(result.body.error).toBeDefined();
+  });
+});
+
+describe("GET /v1/account/:userName", () => {
+  it("should get user address", async () => {
+    const result: Response = await supertest(app).get("/v1/account/test");
 
     expect(result.status).toBe(200);
     expect(result.body.payload).toBeDefined();
   });
 
   it("should return 404", async () => {
-    const result: Response = await supertest(app).get("/v1/wrong-username");
+    const result: Response = await supertest(app).get("/v1/account/wrong-username");
 
     expect(result.status).toBe(404);
     expect(result.body.error).toBeDefined();

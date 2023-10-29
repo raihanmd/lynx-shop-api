@@ -1,7 +1,7 @@
 export interface IPOSTProductBody {
   productId?: string;
   productSlug?: string;
-  createdAt?: string;
+  createdAt?: number;
   userId: string;
   productName: string;
   productPrice: number;
