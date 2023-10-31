@@ -15,10 +15,11 @@ export async function updateOne({ userId, productId, productName, productPrice, 
         //@ts-ignore
         const [idCategory = rows] = await connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
         if (idCategory.length <= 0) {
-          throw new ServiceError(404, "Product not found.");
+          throw new ServiceError(404, "Category not found.");
         }
         //@ts-ignore
         const productSlug = slugify(productName);
+
         await connection
           .query(
             `UPDATE products 
@@ -28,8 +29,8 @@ export async function updateOne({ userId, productId, productName, productPrice, 
                     description = '${productDescription}', 
                     price = ${productPrice},
                     quantity = ${productQuantity},
-                    weight = ${productWeight},
-                    WHERE id = '${productId}' AND id_user = '${userId}'`
+                    weight = ${productWeight}
+                  WHERE id = '${productId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {
             //@ts-ignore

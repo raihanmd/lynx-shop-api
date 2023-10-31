@@ -14,6 +14,7 @@ export const errorMiddleware: IErrorMiddleware = async (err: Error, req: Request
   if (!err) {
     return next();
   }
+  console.log(err);
 
   if (err instanceof ServiceError) {
     return errorResponse({ statusCode: err.statusCode, error: err.message }, res);

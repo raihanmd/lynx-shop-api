@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
 
-export function getNanoid(): string {
+export function getUuid(): string {
   return v4().replace(/-/g, "").substring(0, 10);
 }

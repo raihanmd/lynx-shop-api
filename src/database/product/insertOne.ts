@@ -13,22 +13,28 @@ export async function insertOne({ productId, productName, productPrice, productC
         //@ts-ignore
         const [idCategory = rows] = await connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
         if (idCategory.length <= 0) {
-          throw new ServiceError(404, "Product not found.");
+          throw new ServiceError(404, "Category not found.");
         }
         await connection
           .query(
             `INSERT INTO products 
-                (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at)
+                (id, id_user, id_categories,
+                  name, slug, image, blurhash,
+                  description, price, quantity,
+                  weight, created_at)
                   VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
-                    '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${productWeight}, ${createdAt})`
+                          '${productName}', '${productSlug}', '${productImage}', 
+                          '${blurhash}', '${productDescription}', ${productPrice}, 
+                          ${productQuantity}, ${productWeight}, ${createdAt})`
           )
           //@ts-ignore
-          .then(([fields]) => {
+          .then(async ([fields]) => {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
               throw new DatabaseError("Failed to insert product.");
             }
           });
+
         await connection.commit();
       } catch (err) {
         await connection.rollback();

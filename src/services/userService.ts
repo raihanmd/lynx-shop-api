@@ -1,6 +1,6 @@
 import PREFIX from "../const/prefix";
 import userDatabase from "../database/user/userDatabase";
-import { getNanoid } from "../utils/getNanoid";
+import { getUuid } from "../utils/getUuid";
 import { validate } from "../utils/validation";
 import { ServiceError } from "../error/serviceError";
 import { loginUserValidation, verifyUserValidation } from "../validation/userValidation";
@@ -20,7 +20,7 @@ const verify = async (req: IVerifyUserBody): Promise<object> => {
 const register = async (req: IRegisterUserBody): Promise<{ userName: string }> => {
   const userBody = validate(registerUserValidation, req);
 
-  userBody.userId = PREFIX.USER + getNanoid();
+  userBody.userId = PREFIX.USER + getUuid();
 
   await userDatabase.register(userBody);
   const userName = await userDatabase.getUserName(userBody.userName);

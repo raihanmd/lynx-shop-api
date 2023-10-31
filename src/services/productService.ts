@@ -11,6 +11,7 @@ import { ServiceError } from "../error/serviceError";
 import { POSTProductValidation, DELETEProductValidation, PUTProductValidation } from "../validation/productValidation";
 import userDatabase from "../database/user/userDatabase";
 import { IResponseProductServicesGetDetail } from "../interfaces/product/IProductResponse";
+import { getUuid } from "../utils/getUuid";
 
 const getAll = async (): Promise<Array<object>> => {
   const products = await productDatabase.getAll();
@@ -27,7 +28,7 @@ const insertOne = async (req: IPOSTProductBody): Promise<object> => {
     throw new ServiceError(403, "You must have the wallet first.");
   }
 
-  productBody.productId = PREFIX.PRODUCT;
+  productBody.productId = PREFIX.PRODUCT + getUuid();
   //@ts-ignore
   productBody.productSlug = slugify(productBody.productName, { lower: true });
   productBody.createdAt = getUnixTime();
