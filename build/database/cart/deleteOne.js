@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOne = void 0;
 const database_1 = require("../../config/database");
 const databaseError_1 = require("../../error/databaseError");
-function deleteOne({ idCart, idUser }) {
+function deleteOne({ cartId, userId }) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield database_1.con
             .getConnection()
@@ -21,11 +21,11 @@ function deleteOne({ idCart, idUser }) {
             try {
                 yield connection
                     .query(`DELETE FROM cart 
-                  WHERE id = '${idCart}' AND id_user = '${idUser}'`)
+                  WHERE id = '${cartId}' AND id_user = '${userId}'`)
                     .then(([fields]) => {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {
-                        throw new databaseError_1.DatabaseError("Failed to insert data.");
+                        throw new databaseError_1.DatabaseError("Failed to delete data.");
                     }
                 });
                 yield connection.commit();

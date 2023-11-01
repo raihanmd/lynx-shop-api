@@ -13,7 +13,7 @@ exports.insertOne = void 0;
 const database_1 = require("../../config/database");
 const databaseError_1 = require("../../error/databaseError");
 const serviceError_1 = require("../../error/serviceError");
-function insertOne({ idCart, idUser, idProduct, quantityProduct }) {
+function insertOne({ cartId, userId, productId, productQuantity }) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield database_1.con
             .getConnection()
@@ -22,20 +22,19 @@ function insertOne({ idCart, idUser, idProduct, quantityProduct }) {
             try {
                 //@ts-ignore
                 const [detailProduct = rows] = yield connection.query(`SELECT p.price, 
-									pd.quantity 
-									FROM products AS p
-									INNER JOIN products_detail AS pd ON p.id = pd.id_products
-									WHERE p.id = '${idProduct}'`);
+									p.quantity 
+								FROM products AS p
+									WHERE p.id = '${productId}'`);
                 if (detailProduct.length <= 0) {
-                    throw new serviceError_1.ServiceError(403, "Invalid action.");
+                    throw new serviceError_1.ServiceError(404, "Product not found.");
                 }
-                if (detailProduct[0].quantity < quantityProduct) {
+                if (detailProduct[0].quantity < productQuantity) {
                     throw new serviceError_1.ServiceError(400, "Quantity of product is lesser than you try to order.");
                 }
                 yield connection
                     .query(`INSERT INTO cart
 										(id, id_user, id_products, quantity)
-										VALUES ('${idCart}', '${idUser}', '${idProduct}', ${quantityProduct})`)
+										VALUES ('${cartId}', '${userId}', '${productId}', ${productQuantity})`)
                     .then(([fields]) => {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {

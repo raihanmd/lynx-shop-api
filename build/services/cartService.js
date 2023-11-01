@@ -17,6 +17,8 @@ const cartDatabase_1 = __importDefault(require("../database/cart/cartDatabase"))
 const validation_1 = require("../utils/validation");
 const serviceError_1 = require("../error/serviceError");
 const cartValidation_1 = require("../validation/cartValidation");
+const prefix_1 = __importDefault(require("../const/prefix"));
+const getUuid_1 = require("../utils/getUuid");
 const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName } = req;
     const isUserExist = yield userDatabase_1.default.getUserName(userName);
@@ -34,6 +36,7 @@ const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const cartBody = (0, validation_1.validate)(cartValidation_1.POSTCartValidation, req);
+    cartBody.cartId = prefix_1.default.CART + (0, getUuid_1.getUuid)();
     yield cartDatabase_1.default.insertOne(cartBody);
     return { isSucceed: true };
 });
