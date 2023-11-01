@@ -22,9 +22,9 @@ exports.loginUserValidation = joi_1.default.object({
 exports.verifyUserValidation = joi_1.default.object({
     userId: joi_1.default.string().max(14).required(),
     userProvince: joi_1.default.string().max(50).required(),
-    userProvinceId: joi_1.default.number().max(10).required(),
+    userProvinceId: joi_1.default.number().max(9999999999).required(),
     userCity: joi_1.default.string().max(50).required(),
-    userCityId: joi_1.default.number().max(10).required(),
+    userCityId: joi_1.default.number().max(9999999999).required(),
     userBio: joi_1.default.string().max(50).required(),
     userShopDesc: joi_1.default.string().max(255).required(),
 });

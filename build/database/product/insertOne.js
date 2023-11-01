@@ -24,20 +24,25 @@ function insertOne({ productId, productName, productPrice, productCategory, prod
                 //@ts-ignore
                 const [idCategory = rows] = yield connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
                 if (idCategory.length <= 0) {
-                    throw new serviceError_1.ServiceError(404, "Product not found.");
+                    throw new serviceError_1.ServiceError(404, "Category not found.");
                 }
                 yield connection
                     .query(`INSERT INTO products 
-                (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at)
+                (id, id_user, id_categories,
+                  name, slug, image, blurhash,
+                  description, price, quantity,
+                  weight, created_at)
                   VALUES ('${productId}', '${userId}', '${idCategory[0].id}', 
-                    '${productName}', '${productSlug}', '${productImage}', '${blurhash}', '${productDescription}', ${productPrice}, ${productQuantity}, ${productWeight}, ${createdAt})`)
+                          '${productName}', '${productSlug}', '${productImage}', 
+                          '${blurhash}', '${productDescription}', ${productPrice}, 
+                          ${productQuantity}, ${productWeight}, ${createdAt})`)
                     //@ts-ignore
-                    .then(([fields]) => {
+                    .then(([fields]) => __awaiter(this, void 0, void 0, function* () {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {
                         throw new databaseError_1.DatabaseError("Failed to insert product.");
                     }
-                });
+                }));
                 yield connection.commit();
             }
             catch (err) {

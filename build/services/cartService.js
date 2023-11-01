@@ -20,7 +20,6 @@ const cartValidation_1 = require("../validation/cartValidation");
 const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName } = req;
     const isUserExist = yield userDatabase_1.default.getUserName(userName);
-    console.log(isUserExist);
     //@ts-ignore
     if (!isUserExist) {
         throw new serviceError_1.ServiceError(404, "User not found.");

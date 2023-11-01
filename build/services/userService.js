@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const prefix_1 = __importDefault(require("../const/prefix"));
 const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
-const getNanoid_1 = require("../utils/getNanoid");
+const getUuid_1 = require("../utils/getUuid");
 const validation_1 = require("../utils/validation");
 const serviceError_1 = require("../error/serviceError");
 const userValidation_1 = require("../validation/userValidation");
@@ -26,7 +26,7 @@ const verify = (req) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const register = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const userBody = (0, validation_1.validate)(userValidation_2.registerUserValidation, req);
-    userBody.userId = prefix_1.default.USER + (0, getNanoid_1.getNanoid)();
+    userBody.userId = prefix_1.default.USER + (0, getUuid_1.getUuid)();
     yield userDatabase_1.default.register(userBody);
     const userName = yield userDatabase_1.default.getUserName(userBody.userName);
     return userName;

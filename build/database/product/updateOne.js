@@ -28,7 +28,7 @@ function updateOne({ userId, productId, productName, productPrice, productCatego
                 //@ts-ignore
                 const [idCategory = rows] = yield connection.query(`SELECT id FROM categories WHERE name = '${productCategory}'`);
                 if (idCategory.length <= 0) {
-                    throw new serviceError_1.ServiceError(404, "Product not found.");
+                    throw new serviceError_1.ServiceError(404, "Category not found.");
                 }
                 //@ts-ignore
                 const productSlug = (0, slugify_1.default)(productName);
@@ -40,8 +40,8 @@ function updateOne({ userId, productId, productName, productPrice, productCatego
                     description = '${productDescription}', 
                     price = ${productPrice},
                     quantity = ${productQuantity},
-                    weight = ${productWeight},
-                    WHERE id = '${productId}' AND id_user = '${userId}'`)
+                    weight = ${productWeight}
+                  WHERE id = '${productId}' AND id_user = '${userId}'`)
                     .then(([fields]) => {
                     //@ts-ignore
                     if (fields.affectedRows <= 0) {

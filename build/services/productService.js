@@ -22,6 +22,7 @@ const validation_1 = require("../utils/validation");
 const serviceError_1 = require("../error/serviceError");
 const productValidation_1 = require("../validation/productValidation");
 const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
+const getUuid_1 = require("../utils/getUuid");
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield productDatabase_1.default.getAll();
     return products;
@@ -32,7 +33,7 @@ const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     if (!userWallet) {
         throw new serviceError_1.ServiceError(403, "You must have the wallet first.");
     }
-    productBody.productId = prefix_1.default.PRODUCT;
+    productBody.productId = prefix_1.default.PRODUCT + (0, getUuid_1.getUuid)();
     //@ts-ignore
     productBody.productSlug = (0, slugify_1.default)(productBody.productName, { lower: true });
     productBody.createdAt = (0, getUnixTime_1.default)();
