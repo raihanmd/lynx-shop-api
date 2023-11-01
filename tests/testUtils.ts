@@ -12,6 +12,7 @@ export const deleteTestUser = async (test: string = "test") => {
   await con.query(`DELETE FROM addresses WHERE province = '${test}'`);
   await con.query(`DELETE FROM wallet WHERE id_user = '${test}'`);
   await con.query(`DELETE FROM products WHERE id_user = '${test}'`);
+  await con.query(`DELETE FROM cart WHERE id_user = '${test}'`);
 };
 
 export const createTestUserVerification = async () => createTestUser("testVerif");
@@ -27,8 +28,15 @@ export const deleteTestCategory = async () => {
 };
 
 export const createTestProduct = async () => {
-  await con.query(`INSERT INTO products (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at) VALUES ('test', 'test', 'test',  'test', 'test', 'test',  'test', 'test', 1, 1, 1, 1)`);
+  await con.query(
+    `INSERT INTO products (id, id_user, id_categories, name, slug, image, blurhash, description, price, quantity, weight, created_at) VALUES ('test', 'test', 'test',  'test', 'test', 'test',  'test', 'test', 100, 100, 100, 100)`
+  );
 };
+
+export const createTestCart = async () => {
+  await con.query(`INSERT INTO cart (id, id_user, id_products, quantity) VALUES ('test', 'test', 'test',  1)`);
+};
+
 export const verifyTestUser = async () => {
   await userDatabase.verify({ userBio: "test", userCity: "test", userCityId: 1, userId: "test", userProvince: "test", userProvinceId: 1, userShopDesc: "test" });
 };

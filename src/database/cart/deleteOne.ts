@@ -16,7 +16,7 @@ export async function deleteOne({ cartId, userId }: IDELETECartBody) {
           .then(([fields]) => {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new DatabaseError("Failed to insert data.");
+              throw new DatabaseError("Failed to delete data.");
             }
           });
 

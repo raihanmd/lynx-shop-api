@@ -17,7 +17,7 @@ export async function updateOne({ cartId, userId, productId, productQuantity }: 
                   WHERE p.id = '${productId}'`
         );
         if (detailProduct.length <= 0) {
-          throw new ServiceError(403, "Invalid action.");
+          throw new ServiceError(404, "Product not found.");
         }
 
         if (detailProduct[0].quantity < productQuantity) {
@@ -33,7 +33,7 @@ export async function updateOne({ cartId, userId, productId, productQuantity }: 
           .then(([fields]) => {
             //@ts-ignore
             if (fields.affectedRows <= 0) {
-              throw new DatabaseError("Failed to update data, only accept updating your own cart.");
+              throw new DatabaseError("Failed to update data.");
             }
           });
 
