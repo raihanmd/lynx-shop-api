@@ -3,7 +3,7 @@ import { DatabaseError } from "../../error/databaseError";
 import { ServiceError } from "../../error/serviceError";
 import { IPUTCartBody } from "../../interfaces/cart/ICartBody";
 
-export async function updateOne({ idCart, idUser, idProduct, quantityProduct }: IPUTCartBody) {
+export async function updateOne({ cartId, userId, productId, productQuantity }: IPUTCartBody) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -12,24 +12,23 @@ export async function updateOne({ idCart, idUser, idProduct, quantityProduct }: 
         //@ts-ignore
         const [detailProduct = rows] = await connection.query(
           `SELECT   p.price, 
-                      pd.quantity 
+                    p.quantity 
                 FROM products AS p
-                  INNER JOIN products_detail AS pd ON p.id = pd.id_products
-                    WHERE p.id = '${idProduct}'`
+                  WHERE p.id = '${productId}'`
         );
         if (detailProduct.length <= 0) {
           throw new ServiceError(403, "Invalid action.");
         }
 
-        if (detailProduct[0].quantity < quantityProduct) {
+        if (detailProduct[0].quantity < productQuantity) {
           throw new ServiceError(400, "Quantity of product is lesser than you try to order.");
         }
 
         await connection
           .query(
             `UPDATE cart 
-                  SET quantity = '${quantityProduct}'
-                      WHERE id = '${idCart}' AND id_user = '${idUser}'`
+                  SET quantity = '${productQuantity}'
+                      WHERE id = '${cartId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {
             //@ts-ignore

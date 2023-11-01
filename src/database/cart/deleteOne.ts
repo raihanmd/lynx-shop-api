@@ -2,7 +2,7 @@ import { con } from "../../config/database";
 import { DatabaseError } from "../../error/databaseError";
 import { IDELETECartBody } from "../../interfaces/cart/ICartBody";
 
-export async function deleteOne({ idCart, idUser }: IDELETECartBody) {
+export async function deleteOne({ cartId, userId }: IDELETECartBody) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -11,7 +11,7 @@ export async function deleteOne({ idCart, idUser }: IDELETECartBody) {
         await connection
           .query(
             `DELETE FROM cart 
-                  WHERE id = '${idCart}' AND id_user = '${idUser}'`
+                  WHERE id = '${cartId}' AND id_user = '${userId}'`
           )
           .then(([fields]) => {
             //@ts-ignore

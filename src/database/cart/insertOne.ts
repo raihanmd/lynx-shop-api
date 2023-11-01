@@ -3,7 +3,7 @@ import { DatabaseError } from "../../error/databaseError";
 import { ServiceError } from "../../error/serviceError";
 import { IPOSTCartBody } from "../../interfaces/cart/ICartBody";
 
-export async function insertOne({ idCart, idUser, idProduct, quantityProduct }: IPOSTCartBody) {
+export async function insertOne({ cartId, userId, productId, productQuantity }: IPOSTCartBody) {
   return await con
     .getConnection()
     .then(async (connection) => {
@@ -12,16 +12,15 @@ export async function insertOne({ idCart, idUser, idProduct, quantityProduct }: 
         //@ts-ignore
         const [detailProduct = rows] = await connection.query(
           `SELECT p.price, 
-									pd.quantity 
-									FROM products AS p
-									INNER JOIN products_detail AS pd ON p.id = pd.id_products
-									WHERE p.id = '${idProduct}'`
+									p.quantity 
+								FROM products AS p
+									WHERE p.id = '${productId}'`
         );
         if (detailProduct.length <= 0) {
-          throw new ServiceError(403, "Invalid action.");
+          throw new ServiceError(404, "Product not found.");
         }
 
-        if (detailProduct[0].quantity < quantityProduct) {
+        if (detailProduct[0].quantity < productQuantity) {
           throw new ServiceError(400, "Quantity of product is lesser than you try to order.");
         }
 
@@ -29,7 +28,7 @@ export async function insertOne({ idCart, idUser, idProduct, quantityProduct }: 
           .query(
             `INSERT INTO cart
 										(id, id_user, id_products, quantity)
-										VALUES ('${idCart}', '${idUser}', '${idProduct}', ${quantityProduct})`
+										VALUES ('${cartId}', '${userId}', '${productId}', ${productQuantity})`
           )
           .then(([fields]) => {
             //@ts-ignore

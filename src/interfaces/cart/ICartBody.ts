@@ -1,15 +1,15 @@
 export interface IPOSTCartBody {
-  idCart?: string;
-  idUser: string;
-  idProduct: string;
-  quantityProduct: number;
+  cartId?: string;
+  userId: string;
+  productId: string;
+  productQuantity: number;
 }
 
 export interface IPUTCartBody extends IPOSTCartBody {
-  idCart: string;
+  cartId: string;
 }
 
 export interface IDELETECartBody {
-  idCart: string;
-  idUser: string;
+  cartId: string;
+  userId: string;
 }

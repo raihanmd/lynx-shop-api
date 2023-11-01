@@ -173,4 +173,30 @@ describe("DELETE /v1/product", () => {
     expect(result.body.payload).toBeDefined();
     expect(result.body.message).toBe("Product deleted successfully.");
   });
+
+  it("Should return failed to insert database", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+    const request: IDELETEProductBody = {
+      productId: "wrong",
+      userId: "test",
+    };
+    const result: Response = await supertest(app).delete("/v1/product").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+    expect(result.status).toBe(403);
+    expect(result.body.error).toBe("Failed to delete product.");
+  });
+
+  it("Should reject if request is invalid", async () => {
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY is not defined in the environment variables.");
+    }
+    const request: IDELETEProductBody = {
+      productId: "",
+      userId: "",
+    };
+    const result: Response = await supertest(app).delete("/v1/product").send(request).set("API-Key", process.env.API_KEY).set("Content-Type", "application/json");
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBeDefined();
+  });
 });

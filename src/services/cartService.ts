@@ -4,6 +4,8 @@ import { validate } from "../utils/validation";
 import { ServiceError } from "../error/serviceError";
 import { DELETECartValidation, POSTCartValidation, PUTCartValidation } from "../validation/cartValidation";
 import { IDELETECartBody, IPOSTCartBody, IPUTCartBody } from "../interfaces/cart/ICartBody";
+import PREFIX from "../const/prefix";
+import { getUuid } from "../utils/getUuid";
 
 const get = async (req: { userName: string }): Promise<object[] | string> => {
   const { userName } = req;
@@ -29,6 +31,7 @@ const get = async (req: { userName: string }): Promise<object[] | string> => {
 const insertOne = async (req: IPOSTCartBody): Promise<object> => {
   const cartBody = validate(POSTCartValidation, req);
 
+  cartBody.cartId = PREFIX.CART + getUuid();
   await cartDatabase.insertOne(cartBody);
 
   return { isSucceed: true };
