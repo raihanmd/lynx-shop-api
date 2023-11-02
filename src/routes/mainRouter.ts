@@ -4,6 +4,7 @@ import userController from "../controller/userController";
 import productController from "../controller/productController";
 import blurhashController from "../controller/blurhashController";
 import cartController from "../controller/cartController";
+import categoryController from "../controller/categoryController";
 
 //? endpoint /v1/....
 
@@ -15,11 +16,12 @@ mainRouter.get("/cart/:userName", cartController.GET);
 mainRouter.post("/blurhash", blurhashController.getBlurhash);
 mainRouter.post("/verification", userController.verify);
 
-//!Belom beres
 mainRouter.post("/cart", cartController.insertOne);
 mainRouter.put("/cart", cartController.update);
 mainRouter.delete("/cart", cartController.deleteOne);
-//!
+
+mainRouter.post("/category", categoryController.GETCategory);
+mainRouter.get("/category/:category", categoryController.GETProduct);
 
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);

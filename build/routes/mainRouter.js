@@ -9,6 +9,7 @@ const userController_1 = __importDefault(require("../controller/userController")
 const productController_1 = __importDefault(require("../controller/productController"));
 const blurhashController_1 = __importDefault(require("../controller/blurhashController"));
 const cartController_1 = __importDefault(require("../controller/cartController"));
+const categoryController_1 = __importDefault(require("../controller/categoryController"));
 //? endpoint /v1/....
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
@@ -16,11 +17,11 @@ mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
 mainRouter.post("/blurhash", blurhashController_1.default.getBlurhash);
 mainRouter.post("/verification", userController_1.default.verify);
-//!Belom beres
 mainRouter.post("/cart", cartController_1.default.insertOne);
 mainRouter.put("/cart", cartController_1.default.update);
 mainRouter.delete("/cart", cartController_1.default.deleteOne);
-//!
+mainRouter.post("/category", categoryController_1.default.GETCategory);
+mainRouter.get("/category/:category", categoryController_1.default.GETProduct);
 mainRouter.post("/register", userController_1.default.register);
 mainRouter.post("/login", userController_1.default.login);
 mainRouter.get("/product", productController_1.default.GETAll);
