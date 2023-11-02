@@ -1,8 +1,9 @@
 import { con } from "../../config/database";
 import { DatabaseError } from "../../error/databaseError";
 import { ServiceError } from "../../error/serviceError";
+import { IPOSTOrderBody } from "../../interfaces/order/IOrderBody";
 
-export async function insertOne({ userId, productId, productQuantity, orderId, orderDate }: any) {
+export async function insertOne({ userId, productId, productQuantity, orderId, orderDate }: IPOSTOrderBody) {
   return await con
     .getConnection()
     .then(async (connection) => {

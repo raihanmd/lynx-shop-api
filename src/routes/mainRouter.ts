@@ -42,4 +42,6 @@ mainRouter.get("/:userName", userController.GETUserPage);
 
 mainRouter.get("/:userName/:slugProduct", productController.GETProductDetail);
 
+//! yang kurang /image /rajaongkir /review /wishlist
+
 export { mainRouter };
