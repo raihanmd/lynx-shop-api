@@ -3,7 +3,7 @@ import { Handler, NextFunction, Request, Response } from "express";
 import { customResponse } from "../utils/customResponse";
 import blurhashService from "../services/blurhashService";
 
-const getBlurhash: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const GET: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const blurahsh = await blurhashService.getBlurhash(req.body);
 
@@ -13,4 +13,4 @@ const getBlurhash: Handler = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export default { getBlurhash };
+export default { GET };

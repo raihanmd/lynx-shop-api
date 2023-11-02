@@ -24,7 +24,7 @@ const GET = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         next(err);
     }
 });
-const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const POST = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isSucceed = yield cartService_1.default.insertOne(req.body);
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Cart added successfully.", payload: isSucceed }, res);
@@ -33,7 +33,7 @@ const insertOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(err);
     }
 });
-const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const PUT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isSucceed = yield cartService_1.default.update(req.body);
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Cart updated successfully.", payload: isSucceed }, res);
@@ -42,7 +42,7 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         next(err);
     }
 });
-const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const DELETE = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isSucceed = yield cartService_1.default.deleteOne(req.body);
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Cart deleted successfully.", payload: isSucceed }, res);
@@ -51,4 +51,4 @@ const deleteOne = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(err);
     }
 });
-exports.default = { GET, insertOne, update, deleteOne };
+exports.default = { GET, POST, PUT, DELETE };

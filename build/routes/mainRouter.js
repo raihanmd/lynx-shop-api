@@ -10,18 +10,22 @@ const productController_1 = __importDefault(require("../controller/productContro
 const blurhashController_1 = __importDefault(require("../controller/blurhashController"));
 const cartController_1 = __importDefault(require("../controller/cartController"));
 const categoryController_1 = __importDefault(require("../controller/categoryController"));
+const orderController_1 = __importDefault(require("../controller/orderController"));
 //? endpoint /v1/....
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
 mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
-mainRouter.post("/blurhash", blurhashController_1.default.getBlurhash);
+mainRouter.post("/blurhash", blurhashController_1.default.GET);
 mainRouter.post("/verification", userController_1.default.verify);
-mainRouter.post("/cart", cartController_1.default.insertOne);
-mainRouter.put("/cart", cartController_1.default.update);
-mainRouter.delete("/cart", cartController_1.default.deleteOne);
+mainRouter.post("/cart", cartController_1.default.POST);
+mainRouter.put("/cart", cartController_1.default.PUT);
+mainRouter.delete("/cart", cartController_1.default.DELETE);
 mainRouter.post("/category", categoryController_1.default.GETCategory);
 mainRouter.get("/category/:category", categoryController_1.default.GETProduct);
+mainRouter.post("/checkout", orderController_1.default.checkout);
+mainRouter.post("/order", orderController_1.default.POST);
+mainRouter.get("/order/:userName", orderController_1.default.GET);
 mainRouter.post("/register", userController_1.default.register);
 mainRouter.post("/login", userController_1.default.login);
 mainRouter.get("/product", productController_1.default.GETAll);

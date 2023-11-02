@@ -14,7 +14,7 @@ const GET: Handler = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-const insertOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const POST: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await cartService.insertOne(req.body);
 
@@ -24,7 +24,7 @@ const insertOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-const update: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const PUT: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await cartService.update(req.body);
 
@@ -34,7 +34,7 @@ const update: Handler = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-const deleteOne: Handler = async (req: Request, res: Response, next: NextFunction) => {
+const DELETE: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const isSucceed = await cartService.deleteOne(req.body);
 
@@ -44,4 +44,4 @@ const deleteOne: Handler = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export default { GET, insertOne, update, deleteOne };
+export default { GET, POST, PUT, DELETE };
