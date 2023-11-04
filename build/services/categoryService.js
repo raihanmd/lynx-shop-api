@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const categoryDatabase_1 = __importDefault(require("../database/category/categoryDatabase"));
+const serviceError_1 = require("../error/serviceError");
 const getCategory = () => __awaiter(void 0, void 0, void 0, function* () {
     const categories = yield categoryDatabase_1.default.getAll();
     //@ts-ignore
@@ -21,6 +22,10 @@ const getCategory = () => __awaiter(void 0, void 0, void 0, function* () {
 const getProduct = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { category } = req;
     const products = yield categoryDatabase_1.default.getProduct(category.toLowerCase());
+    //@ts-ignore
+    if (products.length === 0) {
+        throw new serviceError_1.ServiceError(404, "Category not found");
+    }
     //@ts-ignore
     return products;
 });

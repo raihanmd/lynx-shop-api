@@ -21,7 +21,7 @@ mainRouter.post("/verification", userController_1.default.verify);
 mainRouter.post("/cart", cartController_1.default.POST);
 mainRouter.put("/cart", cartController_1.default.PUT);
 mainRouter.delete("/cart", cartController_1.default.DELETE);
-mainRouter.post("/category", categoryController_1.default.GETCategory);
+mainRouter.get("/category", categoryController_1.default.GETCategory);
 mainRouter.get("/category/:category", categoryController_1.default.GETProduct);
 mainRouter.post("/checkout", orderController_1.default.checkout);
 mainRouter.post("/order", orderController_1.default.POST);

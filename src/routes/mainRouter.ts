@@ -22,7 +22,7 @@ mainRouter.post("/cart", cartController.POST);
 mainRouter.put("/cart", cartController.PUT);
 mainRouter.delete("/cart", cartController.DELETE);
 
-mainRouter.post("/category", categoryController.GETCategory);
+mainRouter.get("/category", categoryController.GETCategory);
 mainRouter.get("/category/:category", categoryController.GETProduct);
 
 mainRouter.post("/checkout", orderController.checkout);

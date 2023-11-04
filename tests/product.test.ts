@@ -16,7 +16,7 @@ afterAll(async () => {
 });
 
 describe("GET /v1/product", () => {
-  it("should get products", async () => {
+  it("Should get products", async () => {
     const result: Response = await supertest(app).get("/v1/product");
     expect(result.status).toBe(200);
     expect(result.body.payload).toBeDefined();
