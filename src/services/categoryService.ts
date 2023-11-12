@@ -8,7 +8,7 @@ const getCategory = async (): Promise<Array<object>> => {
   return categories;
 };
 
-const getProduct = async (req: { category: string }): Promise<object[] | string> => {
+const getProduct = async (req: { category: string }): Promise<object[]> => {
   const { category } = req;
 
   const products = await categoryDatabase.getProduct(category.toLowerCase());
