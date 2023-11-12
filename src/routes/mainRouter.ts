@@ -6,6 +6,7 @@ import blurhashController from "../controller/blurhashController";
 import cartController from "../controller/cartController";
 import categoryController from "../controller/categoryController";
 import orderController from "../controller/orderController";
+import firebaseController from "../controller/firebaseController";
 
 //? endpoint /v1/....
 
@@ -14,7 +15,9 @@ const mainRouter = Router();
 mainRouter.get("/account/:userName", userController.GETAddress);
 mainRouter.get("/cart/:userName", cartController.GET);
 
-mainRouter.post("/blurhash", blurhashController.GET);
+mainRouter.get("/blurhash", blurhashController.GET);
+
+mainRouter.post("/image", firebaseController.uploadImage);
 
 mainRouter.post("/verification", userController.verify);
 
@@ -42,6 +45,6 @@ mainRouter.get("/:userName", userController.GETUserPage);
 
 mainRouter.get("/:userName/:slugProduct", productController.GETProductDetail);
 
-//! yang kurang /image /rajaongkir /review /wishlist
+//! yang kurang /rajaongkir /review /wishlist
 
 export { mainRouter };

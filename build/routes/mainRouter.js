@@ -11,12 +11,14 @@ const blurhashController_1 = __importDefault(require("../controller/blurhashCont
 const cartController_1 = __importDefault(require("../controller/cartController"));
 const categoryController_1 = __importDefault(require("../controller/categoryController"));
 const orderController_1 = __importDefault(require("../controller/orderController"));
+const firebaseController_1 = __importDefault(require("../controller/firebaseController"));
 //? endpoint /v1/....
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
 mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
-mainRouter.post("/blurhash", blurhashController_1.default.GET);
+mainRouter.get("/blurhash", blurhashController_1.default.GET);
+mainRouter.post("/image", firebaseController_1.default.uploadImage);
 mainRouter.post("/verification", userController_1.default.verify);
 mainRouter.post("/cart", cartController_1.default.POST);
 mainRouter.put("/cart", cartController_1.default.PUT);
