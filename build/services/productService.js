@@ -40,7 +40,7 @@ const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     yield productDatabase_1.default.insertOne(productBody);
     return { isSucceed: true };
 });
-const update = (req) => __awaiter(void 0, void 0, void 0, function* () {
+const updateOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const productBody = (0, validation_1.validate)(productValidation_1.PUTProductValidation, req);
     yield productDatabase_1.default.updateOne(productBody);
     return { isSucceed: true };
@@ -68,4 +68,4 @@ const getDetail = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const detailProduct = Object.assign(Object.assign({}, product), { ownerImage, ownerShopDescription, ownerProvince, ownerProvinceId, ownerCity, ownerCityId, ownerTotalRating });
     return detailProduct;
 });
-exports.default = { getAll, insertOne, update, deleteOne, getDetail };
+exports.default = { getAll, insertOne, updateOne, deleteOne, getDetail };

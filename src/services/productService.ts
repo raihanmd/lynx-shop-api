@@ -38,7 +38,7 @@ const insertOne = async (req: IPOSTProductBody): Promise<object> => {
   return { isSucceed: true };
 };
 
-const update = async (req: IPUTProductBody): Promise<object> => {
+const updateOne = async (req: IPUTProductBody): Promise<object> => {
   const productBody = validate(PUTProductValidation, req);
 
   await productDatabase.updateOne(productBody);
@@ -81,4 +81,4 @@ const getDetail = async (req: { userName: string } | any): Promise<IResponseProd
   return detailProduct;
 };
 
-export default { getAll, insertOne, update, deleteOne, getDetail };
+export default { getAll, insertOne, updateOne, deleteOne, getDetail };

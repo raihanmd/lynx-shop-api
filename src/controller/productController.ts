@@ -25,7 +25,7 @@ const POST: Handler = async (req: Request, res: Response, next: NextFunction) =>
 
 const PUT: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isSucceed = await productService.update(req.body);
+    const isSucceed = await productService.updateOne(req.body);
 
     return customResponse({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
   } catch (err) {

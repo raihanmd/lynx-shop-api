@@ -11,18 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.get = void 0;
 const database_1 = require("../../config/database");
-// NOTE it might be not effective
-function get(userName) {
+function get(productId) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield database_1.con
-            .query(`SELECT   w.id AS wishlistId,
-                p.id AS productId,
-                p.name AS productName,
-                p.slug AS productSlug
-          FROM wishlist AS w
-            RIGHT JOIN products AS p ON (p.id = w.id_products)
-                RIGHT JOIN user AS u ON (u.id = w.id_user)
-                    WHERE u.user_name = '${userName}'`)
+            .query(`SELECT   r.rating AS reviewsRating,
+                r.comment AS reviewsComment,
+                u.user_name AS writtenBy
+          FROM reviews AS r 
+              INNER JOIN user AS u ON (u.id = r.id_user)
+                INNER JOIN products AS p ON (p.id = r.id_products)  
+                  WHERE p.id = ${productId}
+                    LIMIT 10`)
             .then(([rows]) => rows)
             .catch((err) => {
             throw err;

@@ -8,6 +8,7 @@ import categoryController from "../controller/categoryController";
 import orderController from "../controller/orderController";
 import firebaseController from "../controller/firebaseController";
 import wishlistController from "../controller/wishlistController";
+import reviewController from "../controller/reviewController";
 
 // ? endpoint /v1/....
 
@@ -16,6 +17,7 @@ const mainRouter = Router();
 mainRouter.get("/account/:userName", userController.GETAddress);
 mainRouter.get("/cart/:userName", cartController.GET);
 mainRouter.get("/wishlist/:userName", wishlistController.GET);
+mainRouter.get("/review/:productId", reviewController.GET);
 
 mainRouter.get("/blurhash", blurhashController.GET);
 
@@ -41,6 +43,9 @@ mainRouter.get("/order/:userName", orderController.GET);
 mainRouter.post("/register", userController.register);
 mainRouter.post("/login", userController.login);
 
+mainRouter.post("/review", reviewController.POST);
+mainRouter.put("/review", reviewController.PUT);
+
 mainRouter.get("/product", productController.GETAll);
 mainRouter.post("/product", productController.POST);
 mainRouter.put("/product", productController.PUT);
@@ -50,6 +55,6 @@ mainRouter.get("/:userName", userController.GETUserPage);
 
 mainRouter.get("/:userName/:slugProduct", productController.GETProductDetail);
 
-//! yang kurang /rajaongkir /review
+//! yang kurang /rajaongkir
 
 export { mainRouter };

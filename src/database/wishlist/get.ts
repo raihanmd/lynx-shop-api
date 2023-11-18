@@ -1,6 +1,6 @@
 import { con } from "../../config/database";
 
-// TODO must refaktor this
+// NOTE it might be not effective
 
 export async function get(userName: string) {
   return await con

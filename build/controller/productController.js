@@ -34,7 +34,7 @@ const POST = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const PUT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const isSucceed = yield productService_1.default.update(req.body);
+        const isSucceed = yield productService_1.default.updateOne(req.body);
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "Product updated successfully.", payload: isSucceed }, res);
     }
     catch (err) {

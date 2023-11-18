@@ -13,12 +13,14 @@ const categoryController_1 = __importDefault(require("../controller/categoryCont
 const orderController_1 = __importDefault(require("../controller/orderController"));
 const firebaseController_1 = __importDefault(require("../controller/firebaseController"));
 const wishlistController_1 = __importDefault(require("../controller/wishlistController"));
+const reviewController_1 = __importDefault(require("../controller/reviewController"));
 // ? endpoint /v1/....
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
 mainRouter.get("/account/:userName", userController_1.default.GETAddress);
 mainRouter.get("/cart/:userName", cartController_1.default.GET);
 mainRouter.get("/wishlist/:userName", wishlistController_1.default.GET);
+mainRouter.get("/review/:productId", reviewController_1.default.GET);
 mainRouter.get("/blurhash", blurhashController_1.default.GET);
 mainRouter.post("/image", firebaseController_1.default.uploadImage);
 mainRouter.post("/verification", userController_1.default.verify);
@@ -34,6 +36,8 @@ mainRouter.post("/order", orderController_1.default.POST);
 mainRouter.get("/order/:userName", orderController_1.default.GET);
 mainRouter.post("/register", userController_1.default.register);
 mainRouter.post("/login", userController_1.default.login);
+mainRouter.post("/review", reviewController_1.default.POST);
+mainRouter.put("/review", reviewController_1.default.PUT);
 mainRouter.get("/product", productController_1.default.GETAll);
 mainRouter.post("/product", productController_1.default.POST);
 mainRouter.put("/product", productController_1.default.PUT);

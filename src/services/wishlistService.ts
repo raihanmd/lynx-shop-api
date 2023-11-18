@@ -31,7 +31,7 @@ const get = async (req: { userName: string }): Promise<string> => {
 const insertOne = async (req: IPOSTWishlistBody): Promise<object> => {
   const wishlistBody = validate(POSTWishlistValidation, req);
 
-  wishlistBody.cartId = PREFIX.WISHLIST + getUuid();
+  wishlistBody.wishlistId = PREFIX.WISHLIST + getUuid();
   await wishlistDatabase.insertOne(wishlistBody);
 
   return { isSucceed: true };

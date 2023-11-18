@@ -36,7 +36,7 @@ const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const wishlistBody = (0, validation_1.validate)(wishlistValidation_1.POSTWishlistValidation, req);
-    wishlistBody.cartId = prefix_1.default.CART + (0, getUuid_1.getUuid)();
+    wishlistBody.wishlistId = prefix_1.default.WISHLIST + (0, getUuid_1.getUuid)();
     yield wishlistDatabase_1.default.insertOne(wishlistBody);
     return { isSucceed: true };
 });

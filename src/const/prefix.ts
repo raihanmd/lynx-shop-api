@@ -5,6 +5,6 @@ const PREFIX = {
   ORDER: "ord_",
   CART: "crt_",
   WISHLIST: "wsh_",
-  REVIEWS: "rev_",
+  REVIEW: "rev_",
 };
 export default PREFIX;
