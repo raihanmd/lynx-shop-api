@@ -38,17 +38,17 @@ const insertOne = async (req: IPOSTCartBody): Promise<object> => {
 };
 
 const update = async (req: IPUTCartBody): Promise<object> => {
-  const productBody = validate(PUTCartValidation, req);
+  const cartBody = validate(PUTCartValidation, req);
 
-  await cartDatabase.updateOne(productBody);
+  await cartDatabase.updateOne(cartBody);
 
   return { isSucceed: true };
 };
 
 const deleteOne = async (req: IDELETECartBody): Promise<object> => {
-  const productBody = validate(DELETECartValidation, req);
+  const cartBody = validate(DELETECartValidation, req);
 
-  await cartDatabase.deleteOne(productBody);
+  await cartDatabase.deleteOne(cartBody);
 
   return { isSucceed: true };
 };

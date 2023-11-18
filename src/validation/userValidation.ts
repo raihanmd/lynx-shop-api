@@ -2,7 +2,6 @@
 import Joi from "joi";
 
 export const registerUserValidation = Joi.object({
-  userId: Joi.string().max(14).optional(),
   userOAuthId: Joi.string().max(100).required(),
   userEmail: Joi.string().max(100).required(),
   userName: Joi.string().max(100).required(),

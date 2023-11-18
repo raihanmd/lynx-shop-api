@@ -7,9 +7,6 @@ exports.DELETEProductValidation = exports.PUTProductValidation = exports.POSTPro
 //@ts-ignore
 const joi_1 = __importDefault(require("joi"));
 exports.POSTProductValidation = joi_1.default.object({
-    productId: joi_1.default.string().max(14).optional(),
-    productSlug: joi_1.default.string().max(100).optional(),
-    createdAt: joi_1.default.number().max(9999999999).optional(),
     userId: joi_1.default.string().max(14).required(),
     productName: joi_1.default.string().max(255).required(),
     productPrice: joi_1.default.number().max(99999999999999999999).required(),

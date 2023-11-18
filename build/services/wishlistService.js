@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
-const cartDatabase_1 = __importDefault(require("../database/cart/cartDatabase"));
 const validation_1 = require("../utils/validation");
 const serviceError_1 = require("../error/serviceError");
-const cartValidation_1 = require("../validation/cartValidation");
 const prefix_1 = __importDefault(require("../const/prefix"));
 const getUuid_1 = require("../utils/getUuid");
+const userDatabase_1 = __importDefault(require("../database/user/userDatabase"));
+const wishlistDatabase_1 = __importDefault(require("../database/wishlist/wishlistDatabase"));
+const wishlistValidation_1 = require("../validation/wishlistValidation");
 const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName } = req;
     const isUserExist = yield userDatabase_1.default.getUserName(userName);
@@ -26,28 +26,23 @@ const get = (req) => __awaiter(void 0, void 0, void 0, function* () {
     if (!isUserExist) {
         throw new serviceError_1.ServiceError(404, "User not found.");
     }
-    const userCart = yield cartDatabase_1.default.get(userName);
+    const userWishlist = yield wishlistDatabase_1.default.get(userName);
     //@ts-ignore
-    if (userCart.length === 0) {
-        return "User cart empty.";
+    if (userWishlist.length === 0) {
+        return "User wishlist empty.";
     }
     //@ts-ignore
-    return userCart;
+    return userWishlist;
 });
 const insertOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const cartBody = (0, validation_1.validate)(cartValidation_1.POSTCartValidation, req);
-    cartBody.cartId = prefix_1.default.CART + (0, getUuid_1.getUuid)();
-    yield cartDatabase_1.default.insertOne(cartBody);
-    return { isSucceed: true };
-});
-const update = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const cartBody = (0, validation_1.validate)(cartValidation_1.PUTCartValidation, req);
-    yield cartDatabase_1.default.updateOne(cartBody);
+    const wishlistBody = (0, validation_1.validate)(wishlistValidation_1.POSTWishlistValidation, req);
+    wishlistBody.cartId = prefix_1.default.CART + (0, getUuid_1.getUuid)();
+    yield wishlistDatabase_1.default.insertOne(wishlistBody);
     return { isSucceed: true };
 });
 const deleteOne = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const cartBody = (0, validation_1.validate)(cartValidation_1.DELETECartValidation, req);
-    yield cartDatabase_1.default.deleteOne(cartBody);
+    const wishlistBody = (0, validation_1.validate)(wishlistValidation_1.DELETEWishlistValidation, req);
+    yield wishlistDatabase_1.default.deleteOne(wishlistBody);
     return { isSucceed: true };
 });
-exports.default = { get, insertOne, update, deleteOne };
+exports.default = { get, insertOne, deleteOne };

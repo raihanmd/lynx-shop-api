@@ -2,9 +2,6 @@
 import Joi from "joi";
 
 export const POSTProductValidation = Joi.object({
-  productId: Joi.string().max(14).optional(),
-  productSlug: Joi.string().max(100).optional(),
-  createdAt: Joi.number().max(9999999999).optional(),
   userId: Joi.string().max(14).required(),
   productName: Joi.string().max(255).required(),
   productPrice: Joi.number().max(99999999999999999999).required(),

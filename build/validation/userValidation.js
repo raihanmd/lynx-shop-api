@@ -7,7 +7,6 @@ exports.verifyUserValidation = exports.loginUserValidation = exports.registerUse
 //@ts-ignore
 const joi_1 = __importDefault(require("joi"));
 exports.registerUserValidation = joi_1.default.object({
-    userId: joi_1.default.string().max(14).optional(),
     userOAuthId: joi_1.default.string().max(100).required(),
     userEmail: joi_1.default.string().max(100).required(),
     userName: joi_1.default.string().max(100).required(),
