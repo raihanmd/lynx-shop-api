@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+//@ts-ignore
 import cors from "cors";
 
 import cacheControl from "../cahce/cahceControl";
