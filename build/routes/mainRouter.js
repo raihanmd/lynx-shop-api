@@ -18,7 +18,7 @@ const rajaongkirController_1 = __importDefault(require("../controller/rajaongkir
 // ? endpoint /v1/....
 const mainRouter = (0, express_1.Router)();
 exports.mainRouter = mainRouter;
-mainRouter.get("/blurhash", blurhashController_1.default.GET);
+mainRouter.post("/blurhash", blurhashController_1.default.POST);
 mainRouter.post("/image", firebaseController_1.default.uploadImage);
 mainRouter.post("/wishlist", wishlistController_1.default.POST);
 mainRouter.delete("/wishlist", wishlistController_1.default.DELETE);

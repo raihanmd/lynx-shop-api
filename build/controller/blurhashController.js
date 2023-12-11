@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const customResponse_1 = require("../utils/customResponse");
 const blurhashService_1 = __importDefault(require("../services/blurhashService"));
-const GET = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const POST = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blurahsh = yield blurhashService_1.default.getBlurhash(req.body);
         return (0, customResponse_1.customResponse)({ statusCode: 200, message: "User created", payload: blurahsh }, res);
@@ -23,4 +23,4 @@ const GET = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         next(err);
     }
 });
-exports.default = { GET };
+exports.default = { POST };

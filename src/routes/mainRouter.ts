@@ -15,7 +15,7 @@ import rajaongkirController from "../controller/rajaongkirController";
 
 const mainRouter = Router();
 
-mainRouter.get("/blurhash", blurhashController.GET);
+mainRouter.post("/blurhash", blurhashController.POST);
 
 mainRouter.post("/image", firebaseController.uploadImage);
 
